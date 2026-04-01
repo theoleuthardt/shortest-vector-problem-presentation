@@ -1,0 +1,214 @@
+:root {
+    /* Schriftart hier ändern - Beispiele:
+       -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif  (System)
+       'Inter', sans-serif  (Modern)
+       'Georgia', serif  (Serif)
+       'Courier New', monospace  (Monospace)
+       'Helvetica Neue', Arial, sans-serif  (Clean)
+    */
+    --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+    
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8f9fa;
+    --text-primary: #1a1a1a;
+    --text-secondary: #4a4a4a;
+    --text-muted: #6b7280;
+    --accent-blue: #2563eb;
+    --border-light: #e5e7eb;
+}
+
+.reveal {
+    font-family: var(--font-family);
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+.reveal .slides {
+    text-align: left;
+}
+
+.reveal h1, .reveal h2, .reveal h3, .reveal h4 {
+    font-weight: 600;
+    text-transform: none;
+    color: var(--text-primary);
+    line-height: 1.3;
+}
+
+.reveal h1 {
+    font-size: 2.5em;
+    font-weight: 700;
+}
+
+.reveal h2 {
+    font-size: 1.8em;
+    color: var(--accent-blue);
+    margin-bottom: 0.5em;
+}
+
+.reveal h3 {
+    font-size: 1.4em;
+    margin-bottom: 0.4em;
+}
+
+.reveal h4 {
+    font-size: 1.1em;
+    color: var(--accent-blue);
+}
+
+.reveal p, .reveal li {
+    color: var(--text-primary);
+    line-height: 1.6;
+}
+
+.reveal ol {
+    margin-left: 1.5em;
+}
+
+.reveal ol li {
+    margin-bottom: 0.3em;
+    color: var(--text-primary);
+}
+
+.title-slide {
+    text-align: center;
+}
+
+.title-slide h1 {
+    margin-bottom: 0.3em;
+}
+
+.title-slide .subtitle {
+    font-size: 1.2em;
+    color: var(--accent-blue);
+    margin-top: 0.3em;
+}
+
+.title-slide .meta {
+    margin-top: 1.5em;
+    color: var(--text-muted);
+    font-size: 0.9em;
+}
+
+.box {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-light);
+    border-radius: 6px;
+    padding: 1em;
+    margin: 0.8em 0;
+}
+
+.box-accent {
+    border-left: 3px solid var(--accent-blue);
+}
+
+.formula-box {
+    background-color: var(--bg-secondary);
+    border-left: 3px solid var(--accent-blue);
+    padding: 1em;
+    margin: 0.8em 0;
+}
+
+.grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1em;
+}
+
+.grid-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1em;
+}
+
+.card {
+    background-color: var(--bg-primary);
+    border: 1px solid var(--border-light);
+    border-radius: 6px;
+    padding: 1em;
+}
+
+.card h4 {
+    margin-bottom: 0.4em;
+}
+
+.reveal table {
+    margin: 0.8em auto;
+    border-collapse: collapse;
+    width: 95%;
+    font-size: 0.9em;
+}
+
+.reveal table th {
+    background-color: var(--bg-secondary);
+    color: var(--accent-blue);
+    padding: 0.6em 0.8em;
+    text-align: left;
+    border-bottom: 2px solid var(--accent-blue);
+}
+
+.reveal table td {
+    padding: 0.6em 0.8em;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.highlight {
+    color: var(--accent-blue);
+    font-weight: 600;
+}
+
+.highlight-dark {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.small-text {
+    font-size: 0.8em;
+    color: var(--text-muted);
+}
+
+.badge {
+    display: inline-block;
+    padding: 0.2em 0.5em;
+    border-radius: 3px;
+    font-size: 0.75em;
+    font-weight: 600;
+}
+
+.badge-blue {
+    background-color: #dbeafe;
+    color: #1e40af;
+}
+
+.badge-red {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+.color-blue {
+    color: var(--accent-blue);
+}
+
+.color-dark {
+    color: var(--text-primary);
+}
+
+.color-muted {
+    color: var(--text-muted);
+}
+
+.color-gold {
+    color: #b8860b;
+}
+
+.reveal .progress {
+    color: var(--accent-blue);
+}
+
+.reveal .controls {
+    color: var(--accent-blue);
+}
+
+.reveal .slide-number {
+    color: var(--text-muted);
+    font-size: 0.7em;
+}

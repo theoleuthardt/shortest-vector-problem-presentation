@@ -6,23 +6,18 @@ Reveal.initialize({
     center: true,
     width: 1200,
     height: 700,
-    margin: 0.04,
-    minScale: 0.2,
+    margin: 0.02,
+    minScale: 0.1,
     maxScale: 2.0,
-    showNotes: true,
+    slideNumber: 'c/t',
     plugins: [ RevealMath.KaTeX, RevealNotes ],
-    math: {
-        mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js',
-        config: 'TeX-AMS_HTML-full',
-        TeX: {
-            Macros: {
-                R: '\\mathbb{R}',
-                Z: '\\mathbb{Z}',
-                N: '\\mathbb{N}',
-                Q: '\\mathbb{Q}',
-                O: '\\mathcal{O}',
-                lambda: '\\lambda'
-            }
-        }
+    katex: {
+        version: 'latest',
+        delimiters: [
+            { left: '$$', right: '$$', display: true  },
+            { left: '$',  right: '$',  display: false },
+            { left: '\\(', right: '\\)', display: false },
+            { left: '\\[', right: '\\]', display: true  }
+        ]
     }
 });

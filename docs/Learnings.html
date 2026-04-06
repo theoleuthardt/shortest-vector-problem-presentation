@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SVP Vortrag — Lernzusammenfassung</title>
+<style>
+  :root {
+    --bg: #fafaf8;
+    --bg2: #f1efe8;
+    --text: #2c2c2a;
+    --text2: #5f5e5a;
+    --text3: #888780;
+    --border: rgba(0,0,0,0.1);
+    --blue: #378ADD;
+    --purple: #7F77DD;
+    --teal: #1D9E75;
+    --red: #E24B4A;
+    --amber: #EF9F27;
+    --coral: #D85A30;
+    --green: #97C459;
+    --font: -apple-system, 'Segoe UI', sans-serif;
+    --mono: 'SF Mono', 'Fira Code', monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1a1a1a;
+      --bg2: #2a2a28;
+      --text: #e0dfd8;
+      --text2: #a0a098;
+      --text3: #707068;
+      --border: rgba(255,255,255,0.1);
+    }
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--font); font-size: 16px; line-height: 1.75; color: var(--text); background: var(--bg); max-width: 780px; margin: 0 auto; padding: 40px 24px 80px; }
+  h1 { font-size: 28px; font-weight: 600; margin: 0 0 8px; }
+  h2 { font-size: 20px; font-weight: 600; margin: 48px 0 16px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+  h3 { font-size: 17px; font-weight: 600; margin: 32px 0 12px; }
+  p { margin: 0 0 16px; }
+  strong { font-weight: 600; }
+  em { font-style: italic; }
+  code { font-family: var(--mono); font-size: 14px; background: var(--bg2); padding: 2px 6px; border-radius: 4px; }
+  .subtitle { color: var(--text2); font-size: 15px; margin-bottom: 32px; }
+  .viz-container { margin: 24px 0 32px; padding: 20px; background: var(--bg2); border-radius: 12px; border: 0.5px solid var(--border); }
+  .viz-container svg { display: block; margin: 0 auto; }
+  .step-nav { display: flex; gap: 8px; margin: 0 0 12px; flex-wrap: wrap; }
+  .step-btn { font-size: 13px; padding: 5px 12px; border-radius: 6px; border: 0.5px solid var(--border); background: transparent; color: var(--text2); cursor: pointer; font-family: var(--font); transition: all .15s; }
+  .step-btn.active { background: #E6F1FB; color: #185FA5; border-color: #85B7EB; font-weight: 500; }
+  @media (prefers-color-scheme: dark) {
+    .step-btn.active { background: #0C447C; color: #B5D4F4; border-color: #185FA5; }
+  }
+  .step-btn:hover:not(.active) { background: var(--bg); }
+  .viz-caption { font-size: 14px; line-height: 1.6; color: var(--text); margin: 10px 0 0; }
+  .viz-caption strong { font-weight: 600; }
+  .key-item { display: inline-flex; align-items: center; gap: 6px; margin-right: 12px; font-size: 12px; color: var(--text2); }
+  .key-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+  .merkbox { margin: 20px 0; padding: 16px 20px; border-radius: 10px; border-left: 4px solid var(--teal); background: var(--bg2); }
+  .merkbox-title { font-size: 14px; font-weight: 600; color: var(--teal); margin-bottom: 6px; }
+  .prof-box { margin: 20px 0; padding: 16px 20px; border-radius: 10px; border-left: 4px solid var(--amber); background: var(--bg2); }
+  .prof-box-title { font-size: 14px; font-weight: 600; color: var(--amber); margin-bottom: 6px; }
+  .proof-check { display: flex; align-items: baseline; gap: 8px; font-size: 14px; color: var(--text2); margin: 4px 0; }
+  .proof-check .mark { color: var(--teal); font-weight: 600; }
+  hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+  .chain-step { display: flex; align-items: center; gap: 12px; margin: 8px 0; }
+  .chain-arrow { color: var(--text3); font-size: 18px; margin: 4px 0 4px 20px; }
+  .chain-box { padding: 8px 14px; border-radius: 8px; font-size: 14px; }
+</style>
+</head>
+<body>
+
+<h1>SVP — Lernzusammenfassung</h1>
+<p class="subtitle">Alle Erklärungen und Visualisierungen aus der Tutoring-Session. Zum Wiederholen vor dem Vortrag.</p>
+
+<!-- ═══════════════════════════════════════ -->
+<h2>1. Was ist ein Gitter?</h2>
+
+<p>Ein Gitter ist die Menge aller ganzzahligen Kombinationen von Basisvektoren. Stell dir schiefes Karopapier vor — die Ecken der Parallelogramme sind die Gitterpunkte, und die Seitenvektoren bilden die Basis.</p>
+
+<p>Formal: <code>L = { z₁b₁ + z₂b₂ + ... + zₙbₙ | zᵢ ∈ ℤ }</code></p>
+
+<p>Der entscheidende Unterschied zur linearen Algebra: Bei Vektorräumen darfst du <em>reelle</em> Zahlen verwenden und erreichst jeden Punkt. Bei Gittern nur <em>ganze</em> Zahlen → du bekommst diskrete Punkte.</p>
+
+<div class="merkbox">
+  <div class="merkbox-title">Merkregel</div>
+  Mit einer Kombination aus den Basisvektoren (nur ganzzahlige Koeffizienten!) kann man das gesamte Gitter abbilden. Kein Punkt fehlt, keiner kommt dazu. Die Basis <em>definiert</em> das Gitter.
+</div>
+
+<p><strong>Basen sind nicht eindeutig:</strong> Dasselbe Gitter kann durch komplett unterschiedliche Basisvektoren beschrieben werden. Manche Basen sind "gut" (kurze, fast senkrechte Vektoren), manche "schlecht" (lange, fast parallele). Man kann nicht einfach orthonormalisieren, weil das reelle Koeffizienten bräuchte.</p>
+
+<p><strong>Grundidee der Gitter-Krypto:</strong> Öffentlicher Schlüssel = schlechte Basis, privater Schlüssel = gute Basis desselben Gitters.</p>
+
+<!-- Viz 1: Lattice + SVP + CVP -->
+<div class="viz-container" id="viz1-wrap">
+  <div class="step-nav" id="v1nav"></div>
+  <div id="v1legend" style="margin-bottom:6px"></div>
+  <svg id="v1svg" width="100%" viewBox="0 0 640 380"></svg>
+  <div class="viz-caption" id="v1cap"></div>
+</div>
+
+<script>
+(function(){
+  const b1=[80,20], b2=[30,70];
+  const b1p=[110,-10], b2p=[-50,60];
+  const ox=320, oy=220;
+  function gp(i,j){return [ox+i*b1[0]+j*b2[0], oy-(i*b1[1]+j*b2[1])];}
+  function allPts(){
+    const pts=[];
+    for(let i=-4;i<=4;i++) for(let j=-4;j<=4;j++){
+      const [x,y]=gp(i,j);
+      if(x>10&&x<630&&y>10&&y<370) pts.push({x,y,i,j});
+    }
+    return pts;
+  }
+  function dist(i,j){return Math.sqrt((i*b1[0]+j*b2[0])**2+(i*b1[1]+j*b2[1])**2);}
+  function findShortest(){
+    let best=Infinity,bi=0,bj=0;
+    for(let i=-4;i<=4;i++) for(let j=-4;j<=4;j++){
+      if(i===0&&j===0) continue;
+      const d=dist(i,j); if(d<best){best=d;bi=i;bj=j;}
+    }
+    return {i:bi,j:bj,d:best};
+  }
+  const steps=[
+    {label:"1. Gitter",legend:[{c:"#5DCAA5",t:"Gitterpunkte"},{c:"#378ADD",t:"Basis b₁, b₂"}]},
+    {label:"2. Andere Basis",legend:[{c:"#5DCAA5",t:"Gleiche Punkte"},{c:"#378ADD",t:"Alte Basis"},{c:"#D85A30",t:"Neue Basis b₁', b₂'"}]},
+    {label:"3. SVP",legend:[{c:"#5DCAA5",t:"Gitterpunkte"},{c:"#E24B4A",t:"λ₁ = kürzester Vektor"}]},
+    {label:"4. γ-SVP",legend:[{c:"#E24B4A",t:"λ₁ (exakt)"},{c:"#EF9F27",t:"γ·λ₁ (Approximation ok)"}]},
+    {label:"5. CVP",legend:[{c:"#7F77DD",t:"Zielpunkt t"},{c:"#1D9E75",t:"Nächster Gitterpunkt"}]},
+  ];
+  const captions=[
+    `<strong>Ein Gitter</strong> entsteht durch alle ganzzahligen Kombinationen der Basisvektoren b₁ und b₂.`,
+    `<strong>Dasselbe Gitter, andere Basis.</strong> Die orangenen Vektoren erzeugen exakt die gleichen Punkte. Das ist die Grundidee der Krypto: öffentlich = schlechte Basis, privat = gute.`,
+    `<strong>SVP: Finde den kürzesten Nicht-Null-Vektor.</strong> In 2D trivial — in Dimension 500+ exponentiell schwer.`,
+    `<strong>γ-SVP:</strong> Statt exakt λ₁ zu finden, reicht ein Vektor im orangenen Kreis. Je größer γ, desto leichter.`,
+    `<strong>CVP:</strong> Finde den nächsten Gitterpunkt zu einem externen Punkt t. Mindestens so schwer wie SVP.`,
+  ];
+  function draw(step){
+    const svg=document.getElementById('v1svg');
+    const pts=allPts(), sh=findShortest(), [sx,sy]=gp(sh.i,sh.j);
+    let h=`<defs><marker id="a1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>`;
+    for(let i=-4;i<=4;i++){const[x1,y1]=gp(i,-4),[x2,y2]=gp(i,4);h+=`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${getComputedStyle(document.body).getPropertyValue('color').includes('255')?'rgba(255,255,255,0.06)':'rgba(0,0,0,0.06)'}" stroke-width="0.3"/>`;}
+    for(let j=-4;j<=4;j++){const[x1,y1]=gp(-4,j),[x2,y2]=gp(4,j);h+=`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${getComputedStyle(document.body).getPropertyValue('color').includes('255')?'rgba(255,255,255,0.06)':'rgba(0,0,0,0.06)'}" stroke-width="0.3"/>`;}
+    const dots=(hl)=>{let g='';pts.forEach(p=>{const isO=p.i===0&&p.j===0,isS=p.i===sh.i&&p.j===sh.j;let fill="#5DCAA5",r=isO?5:3.5,op=isO?1:0.7;if(hl==='svp'&&isS){fill="#E24B4A";r=5;op=1;}if(hl==='cvp'&&p.i===1&&p.j===0){fill="#1D9E75";r=5;op=1;}g+=`<circle cx="${p.x}" cy="${p.y}" r="${r}" fill="${fill}" opacity="${op}"/>`;if(isO)g+=`<text x="${p.x+8}" y="${p.y-8}" fill="var(--text3)" font-size="12" font-family="var(--font)">0</text>`;});return g;};
+    const arrow=(x1,y1,x2,y2,color,w=2)=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${color}" stroke-width="${w}" stroke-linecap="round" marker-end="url(#a1)"/>`;
+    if(step===0){h+=dots('');h+=arrow(ox,oy,ox+b1[0],oy-b1[1],"#378ADD",2.5);h+=arrow(ox,oy,ox+b2[0],oy-b2[1],"#378ADD",2.5);h+=`<text x="${ox+b1[0]+8}" y="${oy-b1[1]-6}" fill="#378ADD" font-size="14" font-weight="500" font-family="var(--font)">b₁</text>`;h+=`<text x="${ox+b2[0]+8}" y="${oy-b2[1]-6}" fill="#378ADD" font-size="14" font-weight="500" font-family="var(--font)">b₂</text>`;}
+    if(step===1){h+=dots('');h+=arrow(ox,oy,ox+b1[0],oy-b1[1],"#378ADD",1.5);h+=arrow(ox,oy,ox+b2[0],oy-b2[1],"#378ADD",1.5);h+=`<text x="${ox+b1[0]+8}" y="${oy-b1[1]-6}" fill="#378ADD" font-size="13" font-family="var(--font)" opacity="0.5">b₁</text>`;h+=`<text x="${ox+b2[0]+8}" y="${oy-b2[1]-6}" fill="#378ADD" font-size="13" font-family="var(--font)" opacity="0.5">b₂</text>`;h+=arrow(ox,oy,ox+b1p[0],oy-b1p[1],"#D85A30",2.5);h+=arrow(ox,oy,ox+b2p[0],oy-b2p[1],"#D85A30",2.5);h+=`<text x="${ox+b1p[0]+8}" y="${oy-b1p[1]-6}" fill="#D85A30" font-size="14" font-weight="500" font-family="var(--font)">b₁'</text>`;h+=`<text x="${ox+b2p[0]-24}" y="${oy-b2p[1]-6}" fill="#D85A30" font-size="14" font-weight="500" font-family="var(--font)">b₂'</text>`;}
+    if(step===2){h+=dots('svp');h+=arrow(ox,oy,sx,sy,"#E24B4A",2.5);h+=`<text x="${(ox+sx)/2+10}" y="${(oy+sy)/2-10}" fill="#E24B4A" font-size="14" font-weight="500" font-family="var(--font)">λ₁</text>`;}
+    if(step===3){const r1=sh.d,r2=r1*2;h+=`<circle cx="${ox}" cy="${oy}" r="${r1}" fill="none" stroke="#E24B4A" stroke-width="1" stroke-dasharray="4 3" opacity="0.7"/>`;h+=`<circle cx="${ox}" cy="${oy}" r="${r2}" fill="#EF9F27" fill-opacity="0.08" stroke="#EF9F27" stroke-width="1.5" stroke-dasharray="5 3"/>`;h+=dots('svp');h+=arrow(ox,oy,sx,sy,"#E24B4A",2);h+=`<text x="${ox+8}" y="${oy-r1-6}" fill="#E24B4A" font-size="12" font-family="var(--font)">λ₁</text>`;h+=`<text x="${ox+8}" y="${oy-r2-6}" fill="#EF9F27" font-size="12" font-family="var(--font)">γ·λ₁</text>`;pts.filter(p=>{if(p.i===0&&p.j===0)return false;const d=dist(p.i,p.j);return d<=r2&&d>r1;}).forEach(p=>{h+=`<circle cx="${p.x}" cy="${p.y}" r="6" fill="none" stroke="#EF9F27" stroke-width="1.5"/>`;});}
+    if(step===4){const tx=ox+55,ty=oy-52,[cx,cy]=gp(1,0);h+=dots('cvp');h+=`<circle cx="${tx}" cy="${ty}" r="6" fill="#7F77DD"/>`;h+=`<text x="${tx+10}" y="${ty-8}" fill="#7F77DD" font-size="14" font-weight="500" font-family="var(--font)">t</text>`;h+=`<line x1="${tx}" y1="${ty}" x2="${cx}" y2="${cy}" stroke="#1D9E75" stroke-width="1.5" stroke-dasharray="5 3"/>`;h+=`<text x="${(tx+cx)/2+10}" y="${(ty+cy)/2-8}" fill="#1D9E75" font-size="12" font-family="var(--font)">Distanz</text>`;}
+    svg.innerHTML=h;
+    document.querySelectorAll('#v1nav .step-btn').forEach((b,i)=>b.classList.toggle('active',i===step));
+    document.getElementById('v1legend').innerHTML=steps[step].legend.map(l=>`<span class="key-item"><span class="key-dot" style="background:${l.c}"></span>${l.t}</span>`).join('');
+    document.getElementById('v1cap').innerHTML=captions[step];
+  }
+  const nav=document.getElementById('v1nav');
+  steps.forEach((s,i)=>{const b=document.createElement('button');b.className='step-btn';b.textContent=s.label;b.onclick=()=>draw(i);nav.appendChild(b);});
+  draw(0);
+})();
+</script>
+
+<!-- ═══════════════════════════════════════ -->
+<h2>2. SVP, γ-SVP und CVP</h2>
+
+<h3>Exaktes SVP</h3>
+<p>Gegeben eine Basis B, finde den kürzesten Nicht-Null-Vektor. Die Länge dieses Vektors heißt λ₁(L). Minkowski hat 1889 bewiesen, dass so ein Vektor immer existiert — aber ihn <em>finden</em> ist das Problem.</p>
+
+<h3>γ-SVP (Approximation)</h3>
+<p>Statt den exakt kürzesten Vektor zu finden, reicht einer, der höchstens γ-mal so lang ist. Drei Varianten:</p>
+<p><strong>Suchversion (SVP_γ):</strong> Finde einen Vektor v mit ‖v‖ ≤ γ · λ₁.</p>
+<p><strong>Schätzversion (EstSVP_γ):</strong> Gib die Länge λ₁ bis auf Faktor γ genau an.</p>
+<p><strong>Entscheidungsversion (GapSVP_γ):</strong> Gegeben Basis B und Wert d, unterscheide: Ist λ₁ ≤ d (YES) oder λ₁ > γ·d (NO)? Alles dazwischen ist Grauzone (Promise-Problem).</p>
+
+<div class="merkbox">
+  <div class="merkbox-title">Die Komplexitätslandschaft von γ</div>
+  <code>γ = 1</code> → NP-hart (Ajtai 1998)<br>
+  <code>γ = Konstante</code> → NP-hart (Micciancio 2001)<br>
+  <code>γ ≈ √n</code> → NP ∩ coNP (Aharonov & Regev 2005)<br>
+  <code>γ = 2^O(n)</code> → in P (LLL löst das)<br>
+  Dazwischen: <em>Terra incognita</em> — niemand weiß wo es kippt.
+</div>
+
+<h3>CVP (Closest Vector Problem)</h3>
+<p>Gegeben ein Gitter und einen beliebigen Punkt t, finde den nächsten Gitterpunkt. CVP ≥ SVP in der Schwierigkeit (es gibt eine Reduktion von SVP auf CVP).</p>
+
+<!-- ═══════════════════════════════════════ -->
+<h2>3. Komplexitätstheoretische Einordnung</h2>
+
+<h3>Schnell-Glossar</h3>
+<p><strong>P</strong> = effizient lösbar. <strong>NP</strong> = Lösung schnell überprüfbar. <strong>NP-hart</strong> = mindestens so schwer wie alles in NP. <strong>coNP</strong> = Ablehnung schnell verifizierbar. <strong>NP ∩ coNP</strong> = beides verifizierbar → vermutlich nicht NP-hart.</p>
+
+<h3>NP-Härte (Ajtai 1998)</h3>
+<p>Ajtai hat SAT auf SVP reduziert: Aus jeder SAT-Formel baut er ein Gitter, bei dem der kürzeste Vektor verrät, ob die Formel erfüllbar ist. <strong>Aber:</strong> Die Reduktion braucht Zufall (randomisiert). Ob es deterministisch geht, ist seit 26 Jahren offen.</p>
+<p>Micciancio (2001) verschärft: Selbst Approximation bis auf <em>jeden</em> konstanten Faktor γ bleibt NP-hart.</p>
+
+<h3>GapSVP in NP ∩ coNP (Aharonov & Regev 2005)</h3>
+<p>Ab γ ≈ √n liegt GapSVP in NP ∩ coNP. Die NP-Seite ist trivial (kurzen Vektor vorzeigen). Die coNP-Seite ist der Durchbruch:</p>
+
+<!-- Viz 2: Dual Lattice / coNP -->
+<div class="viz-container" id="viz2-wrap">
+  <div class="step-nav" id="v2nav"></div>
+  <svg id="v2svg" width="100%" viewBox="0 0 640 320"></svg>
+  <div class="viz-caption" id="v2cap"></div>
+</div>
+
+<script>
+(function(){
+  const ox1=160,oy=160,ox2=480;
+  const steps=[
+    {label:"1. Wippe",desc:`<strong>Transference-Theorem:</strong> Wenn λ₁(L) groß ist (Gitter hat keinen kurzen Vektor), dann muss λ₁(L*) klein sein (Dual hat kurze Vektoren). Wie eine Wippe.`},
+    {label:"2. Umgekehrt",desc:`<strong>Andersrum:</strong> Kurze Vektoren im Gitter → lange Vektoren im Dual. Die Wippe kippt. Banaszczyk: λ₁(L) · λ₁(L*) ≥ 1.`},
+    {label:"3. Der Beweis",desc:`<strong>coNP-Beweis:</strong> Um zu zeigen "L hat keinen kurzen Vektor", zeige stattdessen kurze Vektoren im Dual. Abwesenheit beweisen durch Anwesenheit von etwas anderem.`},
+  ];
+  function draw(s){
+    const svg=document.getElementById('v2svg');
+    let h=`<defs><marker id="a2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>`;
+    h+=`<line x1="320" y1="15" x2="320" y2="305" stroke="var(--border)" stroke-width="0.5" stroke-dasharray="6 4"/>`;
+    h+=`<text x="160" y="18" text-anchor="middle" fill="var(--text2)" font-size="13" font-weight="500" font-family="var(--font)">Gitter L</text>`;
+    h+=`<text x="480" y="18" text-anchor="middle" fill="var(--text2)" font-size="13" font-weight="500" font-family="var(--font)">Duales Gitter L*</text>`;
+    function lattice(cx,cy,b1,b2,color,r,range,showR,rc,rv){
+      let g='';
+      for(let i=-range;i<=range;i++){const x1=cx+i*b1[0]-range*b2[0],y1=cy-(i*b1[1]-range*b2[1]),x2=cx+i*b1[0]+range*b2[0],y2=cy-(i*b1[1]+range*b2[1]);g+=`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="var(--border)" stroke-width="0.2"/>`;}
+      for(let j=-range;j<=range;j++){const x1=cx-range*b1[0]+j*b2[0],y1=cy-(-range*b1[1]+j*b2[1]),x2=cx+range*b1[0]+j*b2[0],y2=cy-(range*b1[1]+j*b2[1]);g+=`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="var(--border)" stroke-width="0.2"/>`;}
+      if(showR) g+=`<circle cx="${cx}" cy="${cy}" r="${rv}" fill="${rc}" fill-opacity="0.08" stroke="${rc}" stroke-width="1" stroke-dasharray="4 3"/>`;
+      for(let i=-range;i<=range;i++) for(let j=-range;j<=range;j++){const x=cx+i*b1[0]+j*b2[0],y=cy-(i*b1[1]+j*b2[1]);if(x>5&&x<635&&y>20&&y<310){const isO=i===0&&j===0;g+=`<circle cx="${x}" cy="${y}" r="${isO?4:r}" fill="${color}" opacity="${isO?1:0.7}"/>`;}}
+      return g;
+    }
+    if(s===0){
+      h+=lattice(ox1,oy,[55,18],[15,50],"#378ADD",3.5,4,true,"#378ADD",55);
+      h+=lattice(ox2,oy,[14,5],[4,15],"#D85A30",3,10,true,"#D85A30",14);
+      h+=`<text x="${ox1}" y="${oy+75}" text-anchor="middle" fill="#378ADD" font-size="12" font-family="var(--font)">λ₁ groß ↑</text>`;
+      h+=`<text x="${ox2}" y="${oy+75}" text-anchor="middle" fill="#D85A30" font-size="12" font-family="var(--font)">λ₁* klein ↓</text>`;
+      h+=`<text x="320" y="${oy+75}" text-anchor="middle" fill="var(--text3)" font-size="20">⇆</text>`;
+    }
+    if(s===1){
+      h+=lattice(ox1,oy,[22,7],[6,20],"#378ADD",2.5,8,true,"#378ADD",22);
+      h+=lattice(ox2,oy,[48,16],[12,45],"#D85A30",3.5,3,true,"#D85A30",48);
+      h+=`<text x="${ox1}" y="${oy+75}" text-anchor="middle" fill="#378ADD" font-size="12" font-family="var(--font)">λ₁ klein ↓</text>`;
+      h+=`<text x="${ox2}" y="${oy+75}" text-anchor="middle" fill="#D85A30" font-size="12" font-family="var(--font)">λ₁* groß ↑</text>`;
+      h+=`<text x="320" y="${oy+75}" text-anchor="middle" fill="var(--text3)" font-size="20">⇆</text>`;
+    }
+    if(s===2){
+      const b1D=[14,5],b2D=[4,15];
+      h+=lattice(ox1,oy,[55,18],[15,50],"#378ADD",3.5,4,true,"#E24B4A",40);
+      h+=`<text x="${ox1}" y="${oy+80}" text-anchor="middle" fill="#1D9E75" font-size="12" font-weight="500" font-family="var(--font)">Kein Punkt im Kreis!</text>`;
+      for(let i=-10;i<=10;i++){const x1=ox2+i*b1D[0]-10*b2D[0],y1=oy-(i*b1D[1]-10*b2D[1]),x2=ox2+i*b1D[0]+10*b2D[0],y2=oy-(i*b1D[1]+10*b2D[1]);h+=`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="var(--border)" stroke-width="0.2"/>`;}
+      for(let j=-10;j<=10;j++){const x1=ox2-10*b1D[0]+j*b2D[0],y1=oy-(-10*b1D[1]+j*b2D[1]),x2=ox2+10*b1D[0]+j*b2D[0],y2=oy-(10*b1D[1]+j*b2D[1]);h+=`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="var(--border)" stroke-width="0.2"/>`;}
+      for(let i=-10;i<=10;i++) for(let j=-10;j<=10;j++){const x=ox2+i*b1D[0]+j*b2D[0],y=oy-(i*b1D[1]+j*b2D[1]);if(x>325&&x<635&&y>20&&y<310){const isO=i===0&&j===0;const d=Math.sqrt((i*b1D[0]+j*b2D[0])**2+(i*b1D[1]+j*b2D[1])**2);if(!isO&&d<=22){h+=`<circle cx="${x}" cy="${y}" r="6" fill="none" stroke="#EF9F27" stroke-width="1.5"/>`;h+=`<circle cx="${x}" cy="${y}" r="3" fill="#EF9F27"/>`;}else{h+=`<circle cx="${x}" cy="${y}" r="${isO?4:2.5}" fill="#D85A30" opacity="${isO?1:0.5}"/>`;}}}
+      h+=`<text x="${ox2}" y="${oy+80}" text-anchor="middle" fill="#EF9F27" font-size="12" font-weight="500" font-family="var(--font)">Kurze duale Vektoren = Beweis</text>`;
+      h+=`<path d="M320 ${oy+55} C 360 ${oy+35}, 400 ${oy+35}, 440 ${oy+55}" fill="none" stroke="var(--text3)" stroke-width="0.8" stroke-dasharray="3 3" marker-end="url(#a2)"/>`;
+      h+=`<text x="380" y="${oy+43}" text-anchor="middle" fill="var(--text3)" font-size="10" font-family="var(--font)">beweist</text>`;
+    }
+    svg.innerHTML=h;
+    document.querySelectorAll('#v2nav .step-btn').forEach((b,i)=>b.classList.toggle('active',i===s));
+    document.getElementById('v2cap').innerHTML=steps[s].desc;
+  }
+  const nav=document.getElementById('v2nav');
+  steps.forEach((s,i)=>{const b=document.createElement('button');b.className='step-btn';b.textContent=s.label;b.onclick=()=>draw(i);nav.appendChild(b);});
+  draw(0);
+})();
+</script>
+
+<div class="merkbox">
+  <div class="merkbox-title">Der coNP-Beweis in einem Satz</div>
+  Du beweist Abwesenheit (kein kurzer Vektor im Gitter) durch Anwesenheit (kurze Vektoren im dualen Gitter). Wegen der Wippe (Transference-Theorem) schließt das eine das andere aus.
+</div>
+
+<p>Fun Fact: Aharonov & Regev haben das zuerst quantenmechanisch bewiesen (QMA) und dann "dequantisiert" — den Quantenbeweis in einen klassischen umgewandelt.</p>
+
+<!-- ═══════════════════════════════════════ -->
+<h2>4. Worst-Case-to-Average-Case-Reduktion</h2>
+
+<h3>Das Problem mit RSA</h3>
+<p>RSA sagt: "Faktorisieren zufälliger Zahlen ist hoffentlich schwer." Aber es gibt keinen Beweis dafür. Vielleicht sind 99% der zufälligen Instanzen leicht — dann wäre RSA unsicher. Bogdanov & Trevisan haben gezeigt, dass so eine Worst-Case-to-Average-Case-Verbindung für allgemeine NP-Probleme vermutlich unmöglich ist.</p>
+
+<h3>Ajtais Durchbruch (1996)</h3>
+<p>Für Gitter ist es anders: Wenn du <em>zufällige</em> SIS-Instanzen lösen kannst, kannst du <em>jede beliebige</em> Worst-Case-SVP-Instanz lösen. Die Reduktion baut aus der schwierigsten SVP-Instanz zufällige SIS-Instanzen. Löst jemand die, kannst du die Lösung zurückübersetzen.</p>
+
+<p><strong>SIS (Short Integer Solution):</strong> Gegeben eine zufällige Matrix A, finde einen kurzen Vektor z mit Az = 0 mod q.</p>
+
+<div class="merkbox">
+  <div class="merkbox-title">Warum das einzigartig ist</div>
+  Bei Gittern gibt es keine "leichten zufälligen Instanzen". Entweder ALLE sind schwer, oder ALLE sind leicht. Es gibt kein Dazwischen. Das ist bei keinem anderen kryptografisch relevanten Problem der Fall.
+</div>
+
+<!-- Viz 3: Reduction chain -->
+<div class="viz-container" id="viz3-wrap">
+  <div class="step-nav" id="v3nav"></div>
+  <svg id="v3svg" width="100%" viewBox="0 0 640 420"></svg>
+  <div class="viz-caption" id="v3cap"></div>
+</div>
+
+<script>
+(function(){
+  const steps=[
+    {label:"1. RSA vs Gitter",desc:`<strong>Links RSA:</strong> Mischung aus leichten und schweren Instanzen, keine Verbindung zum Worst-Case. <strong>Rechts Gitter:</strong> Alle gleich schwer, durch Reduktion bewiesen.`},
+    {label:"2. Die volle Kette",desc:`<strong>Die komplette Sicherheitsargumentation:</strong> Jeder Pfeil ist eine bewiesene Reduktion. Kyber brechen = SVP im Worst-Case lösen. Kein bekannter klassischer oder Quantenalgorithmus kann das.`},
+  ];
+  function draw(s){
+    const svg=document.getElementById('v3svg');
+    let h=`<defs><marker id="a3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>`;
+    const cx=320;
+    if(s===0){
+      h+=`<text x="160" y="32" text-anchor="middle" fill="var(--text2)" font-size="14" font-weight="500" font-family="var(--font)">RSA / Faktorisierung</text>`;
+      h+=`<text x="480" y="32" text-anchor="middle" fill="var(--text2)" font-size="14" font-weight="500" font-family="var(--font)">Gitter / SVP</text>`;
+      h+=`<line x1="320" y1="16" x2="320" y2="400" stroke="var(--border)" stroke-width="0.5" stroke-dasharray="6 4"/>`;
+      h+=`<text x="160" y="62" text-anchor="middle" fill="var(--text3)" font-size="12" font-family="var(--font)">Zufällige Instanzen</text>`;
+      const rsaX=[50,92,134,176,218];
+      rsaX.forEach((x,i)=>{const c=i===3?"#F09595":"#97C459";h+=`<rect x="${x}" y="74" width="36" height="36" rx="6" fill="${c}" fill-opacity="0.25" stroke="${c}" stroke-width="0.5"/>`;});
+      h+=`<text x="86" y="98" text-anchor="middle" fill="#639922" font-size="10" font-family="var(--font)">leicht</text>`;
+      h+=`<text x="194" y="98" text-anchor="middle" fill="#E24B4A" font-size="10" font-family="var(--font)">schwer</text>`;
+      h+=`<text x="160" y="136" text-anchor="middle" fill="var(--text3)" font-size="12" font-family="var(--font)">Worst-Case</text>`;
+      h+=`<rect x="110" y="146" width="100" height="36" rx="6" fill="#F09595" fill-opacity="0.25" stroke="#E24B4A" stroke-width="0.5"/>`;
+      h+=`<text x="160" y="170" text-anchor="middle" fill="#E24B4A" font-size="11" font-family="var(--font)">sehr schwer</text>`;
+      h+=`<text x="160" y="212" text-anchor="middle" fill="#E24B4A" font-size="12" font-family="var(--font)">Keine Verbindung!</text>`;
+      h+=`<text x="480" y="62" text-anchor="middle" fill="var(--text3)" font-size="12" font-family="var(--font)">Zufällige Instanzen</text>`;
+      for(let i=0;i<5;i++){h+=`<rect x="${370+i*42}" y="74" width="36" height="36" rx="6" fill="#F09595" fill-opacity="0.25" stroke="#E24B4A" stroke-width="0.5"/>`;h+=`<text x="${388+i*42}" y="98" text-anchor="middle" fill="#E24B4A" font-size="10" font-family="var(--font)">schwer</text>`;}
+      h+=`<text x="480" y="136" text-anchor="middle" fill="var(--text3)" font-size="12" font-family="var(--font)">Worst-Case</text>`;
+      h+=`<rect x="430" y="146" width="100" height="36" rx="6" fill="#F09595" fill-opacity="0.25" stroke="#E24B4A" stroke-width="0.5"/>`;
+      h+=`<text x="480" y="170" text-anchor="middle" fill="#E24B4A" font-size="11" font-family="var(--font)">sehr schwer</text>`;
+      h+=`<line x1="480" y1="114" x2="480" y2="142" stroke="#1D9E75" stroke-width="1.5" marker-end="url(#a3)"/>`;
+      h+=`<line x1="480" y1="184" x2="480" y2="114" stroke="#1D9E75" stroke-width="1.5" marker-start="url(#a3)"/>`;
+      h+=`<text x="512" y="134" fill="#1D9E75" font-size="11" font-weight="500" font-family="var(--font)">= gleich schwer!</text>`;
+      h+=`<rect x="40" y="270" width="230" height="56" rx="8" fill="#F09595" fill-opacity="0.12" stroke="#E24B4A" stroke-width="0.5"/>`;
+      h+=`<text x="155" y="294" text-anchor="middle" fill="#E24B4A" font-size="13" font-weight="500" font-family="var(--font)">Sicherheit = Hoffnung</text>`;
+      h+=`<text x="155" y="312" text-anchor="middle" fill="#E24B4A" font-size="11" font-family="var(--font)">"Hoffentlich schwer"</text>`;
+      h+=`<rect x="370" y="270" width="230" height="56" rx="8" fill="#5DCAA5" fill-opacity="0.12" stroke="#1D9E75" stroke-width="0.5"/>`;
+      h+=`<text x="485" y="294" text-anchor="middle" fill="#1D9E75" font-size="13" font-weight="500" font-family="var(--font)">Sicherheit = Beweis</text>`;
+      h+=`<text x="485" y="312" text-anchor="middle" fill="#1D9E75" font-size="11" font-family="var(--font)">"Beweisbar schwer"</text>`;
+    }
+    if(s===1){
+      const levels=[
+        {y:30,label:"Worst-Case GapSVP/SIVP",sub:"Faktor Õ(n)",color:"#E24B4A",bg:"#F09595"},
+        {y:110,label:"Average-Case SIS",sub:"Ajtai 1996, Micciancio-Regev 2007",color:"#BA7517",bg:"#EF9F27"},
+        {y:190,label:"Average-Case LWE",sub:"Regev 2005, Peikert 2009",color:"#534AB7",bg:"#AFA9EC"},
+        {y:270,label:"ML-KEM / ML-DSA",sub:"NIST FIPS 203 & 204, August 2024",color:"#0F6E56",bg:"#5DCAA5"},
+      ];
+      levels.forEach((lv,i)=>{
+        h+=`<rect x="120" y="${lv.y}" width="400" height="56" rx="8" fill="${lv.bg}" fill-opacity="0.15" stroke="${lv.color}" stroke-width="0.5"/>`;
+        h+=`<text x="${cx}" y="${lv.y+24}" text-anchor="middle" fill="${lv.color}" font-size="14" font-weight="500" font-family="var(--font)">${lv.label}</text>`;
+        h+=`<text x="${cx}" y="${lv.y+42}" text-anchor="middle" fill="${lv.color}" font-size="11" font-family="var(--font)" opacity="0.8">${lv.sub}</text>`;
+        if(i<levels.length-1){h+=`<line x1="${cx}" y1="${lv.y+60}" x2="${cx}" y2="${levels[i+1].y-4}" stroke="var(--text3)" stroke-width="1.5" marker-end="url(#a3)"/>`;}
+      });
+      h+=`<rect x="120" y="360" width="400" height="44" rx="8" fill="var(--bg2)" stroke="var(--border)" stroke-width="0.5"/>`;
+      h+=`<text x="${cx}" y="386" text-anchor="middle" fill="var(--text2)" font-size="12" font-weight="500" font-family="var(--font)">Kyber brechen = SVP im Worst-Case lösen</text>`;
+    }
+    svg.innerHTML=h;
+    document.querySelectorAll('#v3nav .step-btn').forEach((b,i)=>b.classList.toggle('active',i===s));
+    document.getElementById('v3cap').innerHTML=steps[s].desc;
+  }
+  const nav=document.getElementById('v3nav');
+  steps.forEach((s,i)=>{const b=document.createElement('button');b.className='step-btn';b.textContent=s.label;b.onclick=()=>draw(i);nav.appendChild(b);});
+  draw(0);
+})();
+</script>
+
+<!-- ═══════════════════════════════════════ -->
+<h2>5. Algorithmen</h2>
+
+<h3>LLL (Lenstra-Lenstra-Lovász, 1982)</h3>
+<p>Nimmt eine "schlechte" Basis und macht sie "besser". Zwei Bedingungen:</p>
+<p><strong>Größenreduktion:</strong> Gram-Schmidt-Koeffizienten |μ| ≤ ½ — jeder Vektor zeigt so wenig wie möglich in Richtung der vorherigen.</p>
+<p><strong>Lovász-Bedingung:</strong> Die Gram-Schmidt-Vektoren dürfen nicht zu schnell kürzer werden.</p>
+<p>Funktioniert wie Bubble Sort — vergleiche Nachbarn, tausche wenn nötig. Polynomielle Laufzeit, aber exponentieller Approximationsfaktor 2^{(n-1)/2}.</p>
+
+<!-- Viz 4: LLL -->
+<div class="viz-container" id="viz4-wrap">
+  <div class="step-nav" id="v4nav"></div>
+  <svg id="v4svg" width="100%" viewBox="0 0 640 340"></svg>
+  <div class="viz-caption" id="v4cap"></div>
+</div>
+
+<script>
+(function(){
+  const ox=320,oy=190;
+  const badB1=[140,10],badB2=[130,50];
+  const goodB1=[50,40],goodB2=[-30,50];
+  function len(v){return Math.sqrt(v[0]*v[0]+v[1]*v[1]);}
+  function dot(a,b){return a[0]*b[0]+a[1]*b[1];}
+  function angle(a,b){return Math.acos(dot(a,b)/(len(a)*len(b)))*180/Math.PI;}
+  const steps=[
+    {label:"Schlechte Basis",b1:badB1,b2:badB2,desc:`<strong>Schlechte Basis:</strong> Fast parallele Vektoren (${Math.round(angle(badB1,badB2))}°). Der kürzeste Vektor λ₁ ist viel kürzer als beide Basisvektoren.`},
+    {label:"LLL-reduziert",b1:goodB1,b2:goodB2,desc:`<strong>Nach LLL:</strong> Fast senkrechte Vektoren (${Math.round(angle(goodB1,goodB2))}°). b₁ ist jetzt nah an λ₁. In 2D fast perfekt, in hoher Dimension wird der Faktor exponentiell.`},
+  ];
+  function draw(s){
+    const st=steps[s],b1=st.b1,b2=st.b2;
+    let h=`<defs><marker id="a4" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>`;
+    for(let i=-6;i<=6;i++) for(let j=-6;j<=6;j++){const x=ox+i*b1[0]+j*b2[0],y=oy-(i*b1[1]+j*b2[1]);if(x>10&&x<630&&y>10&&y<330){const isO=i===0&&j===0;h+=`<circle cx="${x}" cy="${y}" r="${isO?4:2.5}" fill="#5DCAA5" opacity="${isO?1:0.5}"/>`;}}
+    let minD=Infinity,sv=[0,0];
+    for(let i=-3;i<=3;i++) for(let j=-3;j<=3;j++){if(i===0&&j===0)continue;const vx=i*b1[0]+j*b2[0],vy=i*b1[1]+j*b2[1],d=Math.sqrt(vx*vx+vy*vy);if(d<minD){minD=d;sv=[vx,vy];}}
+    h+=`<line x1="${ox}" y1="${oy}" x2="${ox+sv[0]}" y2="${oy-sv[1]}" stroke="#E24B4A" stroke-width="1.5" stroke-dasharray="4 3" opacity="0.6"/>`;
+    h+=`<text x="${ox+sv[0]+(sv[0]>0?8:-30)}" y="${oy-sv[1]-6}" fill="#E24B4A" font-size="11" font-family="var(--font)" opacity="0.7">λ₁</text>`;
+    h+=`<line x1="${ox}" y1="${oy}" x2="${ox+b1[0]}" y2="${oy-b1[1]}" stroke="#378ADD" stroke-width="2.5" marker-end="url(#a4)"/>`;
+    h+=`<line x1="${ox}" y1="${oy}" x2="${ox+b2[0]}" y2="${oy-b2[1]}" stroke="#7F77DD" stroke-width="2.5" marker-end="url(#a4)"/>`;
+    h+=`<text x="${ox+b1[0]+8}" y="${oy-b1[1]-6}" fill="#378ADD" font-size="14" font-weight="500" font-family="var(--font)">b₁</text>`;
+    h+=`<text x="${ox+b2[0]+8}" y="${oy-b2[1]-6}" fill="#7F77DD" font-size="14" font-weight="500" font-family="var(--font)">b₂</text>`;
+    h+=`<text x="40" y="330" fill="var(--text2)" font-size="11" font-family="var(--mono)">‖b₁‖=${Math.round(len(b1))}  ‖b₂‖=${Math.round(len(b2))}  λ₁=${Math.round(minD)}  Faktor=‖b₁‖/λ₁=${(len(b1)/minD).toFixed(2)}</text>`;
+    document.getElementById('v4svg').innerHTML=h;
+    document.querySelectorAll('#v4nav .step-btn').forEach((b,i)=>b.classList.toggle('active',i===s));
+    document.getElementById('v4cap').innerHTML=st.desc;
+  }
+  const nav=document.getElementById('v4nav');
+  steps.forEach((s,i)=>{const b=document.createElement('button');b.className='step-btn';b.textContent=s.label;b.onclick=()=>draw(i);nav.appendChild(b);});
+  draw(0);
+})();
+</script>
+
+<h3>Exakte Algorithmen</h3>
+<p><strong>Enumeration (Kannan 1983):</strong> Erst Basis reduzieren, dann systematisch alle Vektoren durchprobieren. Wie Baumsuche mit Pruning. Laufzeit n^{O(n)} (superexponentiell), aber nur poly(n) Speicher. Praxistauglich bis Dimension ~60-80.</p>
+<p><strong>Sieving (AKS 2001):</strong> Starte mit vielen zufälligen Gittervektoren, finde nahe Paare, ersetze durch ihre Differenz. Wie ein Sieb, das immer kürzere Vektoren erzeugt. Laufzeit 2^{n+o(n)} (besser), aber auch 2^{n+o(n)} Speicher (schlechter).</p>
+
+<h3>Übersichtstabelle</h3>
+<table style="width:100%;border-collapse:collapse;font-size:14px;margin:16px 0;">
+  <tr style="border-bottom:2px solid var(--border);">
+    <th style="text-align:left;padding:8px;color:var(--text2);">Algorithmus</th>
+    <th style="text-align:left;padding:8px;color:var(--text2);">Faktor γ</th>
+    <th style="text-align:left;padding:8px;color:var(--text2);">Laufzeit</th>
+    <th style="text-align:left;padding:8px;color:var(--text2);">Speicher</th>
+  </tr>
+  <tr style="border-bottom:1px solid var(--border);">
+    <td style="padding:8px;">LLL (1982)</td><td style="padding:8px;font-family:var(--mono);font-size:13px;">2^{(n-1)/2}</td><td style="padding:8px;color:var(--teal);">poly(n)</td><td style="padding:8px;color:var(--teal);">poly(n)</td>
+  </tr>
+  <tr style="border-bottom:1px solid var(--border);">
+    <td style="padding:8px;">BKZ-k</td><td style="padding:8px;font-family:var(--mono);font-size:13px;">2^{O(n/k)}</td><td style="padding:8px;">2^{O(k)}</td><td style="padding:8px;color:var(--teal);">poly(n)</td>
+  </tr>
+  <tr style="border-bottom:1px solid var(--border);">
+    <td style="padding:8px;">Enumeration (1983)</td><td style="padding:8px;font-family:var(--mono);font-size:13px;">1 (exakt)</td><td style="padding:8px;">n^{O(n)}</td><td style="padding:8px;color:var(--teal);">poly(n)</td>
+  </tr>
+  <tr style="border-bottom:1px solid var(--border);">
+    <td style="padding:8px;">Sieving (2001)</td><td style="padding:8px;font-family:var(--mono);font-size:13px;">1 (exakt)</td><td style="padding:8px;">2^{n+o(n)}</td><td style="padding:8px;color:var(--amber);">2^{n+o(n)}</td>
+  </tr>
+  <tr>
+    <td style="padding:8px;">Voronoi (2010)</td><td style="padding:8px;font-family:var(--mono);font-size:13px;">1 (exakt)</td><td style="padding:8px;">Õ(4^n)</td><td style="padding:8px;color:var(--amber);">Õ(2^n)</td>
+  </tr>
+</table>
+
+<div class="prof-box">
+  <div class="prof-box-title">Offene Frage (kann der Prof fragen)</div>
+  Kann SVP in 2^{O(n)} Zeit mit 2^{o(n)} Speicher gelöst werden? Also das Beste aus Enumeration (wenig Speicher) und Sieving (wenig Zeit)?
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<h2>6. Post-Quantum-Krypto (Kurzfassung für den Vortrag)</h2>
+
+<p>RSA und ECC werden durch Shors Algorithmus gebrochen. Die NIST-Standards seit August 2024 basieren auf Gitterproblemen:</p>
+<p><strong>ML-KEM (Kyber):</strong> Schlüsselaustausch, basiert auf Module-LWE.</p>
+<p><strong>ML-DSA (Dilithium):</strong> Digitale Signaturen, basiert auf Module-LWE + Module-SIS.</p>
+<p><strong>SLH-DSA (SPHINCS+):</strong> Hashbasiertes Backup, falls Gitter gebrochen werden.</p>
+
+<div class="merkbox">
+  <div class="merkbox-title">Der Schlüsselsatz für deinen Vortrag</div>
+  "Die Sicherheit von Kyber und Dilithium basiert nicht auf der Hoffnung, dass zufällige Instanzen schwer sind — sondern auf der beweisbaren Worst-Case-Härte von SVP. Das ist eine fundamental stärkere Aussage als alles, was RSA bieten kann."
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<h2>7. Wahrscheinliche Prof-Fragen</h2>
+
+<div class="prof-box">
+  <div class="prof-box-title">1. Warum ist SVP für Post-Quantum-Krypto relevant?</div>
+  Worst-Case-Härte überträgt sich auf Average-Case. Kein bekannter Quantenvorteil. NIST-Standards basieren darauf.
+</div>
+
+<div class="prof-box">
+  <div class="prof-box-title">2. Was leistet LLL, und wo sind seine Grenzen?</div>
+  Polynomielle Laufzeit, aber Approximationsfaktor 2^{(n-1)/2} — exponentiell in der Dimension. Reicht für kleine Dimensionen, nicht für kryptografische Parameter (n ≈ 1000).
+</div>
+
+<div class="prof-box">
+  <div class="prof-box-title">3. Was ist der Unterschied zwischen SVP und CVP?</div>
+  SVP: kürzester Vektor im Gitter. CVP: nächster Gitterpunkt zu einem externen Punkt. CVP ≥ SVP (Reduktion über verdoppelte Basisvektoren).
+</div>
+
+<div class="prof-box">
+  <div class="prof-box-title">4. Was bedeutet die Worst-Case-to-Average-Case-Reduktion?</div>
+  Ajtai 1996: Zufällige SIS-Instanzen lösen = Worst-Case-SVP lösen. Einzigartig — bei RSA/SAT gibt es das nicht. Bogdanov & Trevisan zeigten Barrieren für allgemeine NP-Probleme.
+</div>
+
+<div class="prof-box">
+  <div class="prof-box-title">5. Wie ordnet sich SVP in die Komplexitätslandschaft ein?</div>
+  NP-hart für exakte Lösung (randomisierte Reduktion), für γ ≈ √n in NP ∩ coNP, für γ = 2^{O(n)} in P. Die genaue Grenze ist offen.
+</div>
+
+<div class="prof-box">
+  <div class="prof-box-title">6. Was ist LWE?</div>
+  Gleichungssystem b = As + e mit kleinem Fehler e. Ohne Fehler trivial (Gauß-Elimination), mit Fehler schwer. Regev 2005: LWE lösen → GapSVP im Worst-Case lösen (braucht Quantenreduktion). Peikert 2009: klassisch, aber nur für große Moduli.
+</div>
+
+<hr>
+<p style="color:var(--text3);font-size:13px;margin-top:32px;">Erstellt am Montag während der Pomodoro-Tutoring-Session. Alle Visualisierungen sind interaktiv — klick dich durch die Tabs.</p>
+
+</body>
+</html>

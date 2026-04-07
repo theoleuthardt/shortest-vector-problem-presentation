@@ -39,55 +39,57 @@
 
                 <section>
                     <h3>Was ist ein Gitter?</h3>
-                    <div class="grid-2" style="align-items:center">
-                        <div style="display:flex;justify-content:center">
+                    <div class="grid-2 items-center">
+                        <div class="flex-center">
                             <svg id="svg-lattice-def" width="320" height="280" viewBox="0 0 320 280" class="lattice-svg"></svg>
                         </div>
-                        <div style="text-align:left;padding-left:0.5em">
+                        <div class="text-left-pad">
                             <div class="formula-box">
                                 $$\mathcal{L}(B) = \left\{\, \sum_{i=1}^{n} z_i\,\mathbf{b}_i \;\middle|\; z_i \in \mathbb{Z} \,\right\}$$
                             </div>
-                            <p class="small-text fragment" style="margin-top:0.6em">
+                            <p class="small-text fragment mt-lg">
                                 Alle <span class="highlight">ganzzahligen</span> Linearkombinationen der Basisvektoren
                             </p>
-                            <p class="small-text fragment" style="margin-top:0.4em;color:var(--text-muted)">
+                            <p class="small-text fragment mt-md color-muted">
                                 Wie kariertes Papier, schief gedruckt
                             </p>
                         </div>
                     </div>
                     <aside class="notes">
-                        - Gitter = diskrete Menge von Punkten durch ganzzahlige Kombination der Basis
-                        - Unterschied zur lin. Algebra: nur ganze Zahlen als Koeffizienten
-                        - In 2D anschaulich, in hohen Dimensionen (500+) extrem komplex
+                        - Gitter = diskrete additive Untergruppe von ℝⁿ — alle ganzzahligen Linearkombinationen der Basisvektoren.
+                        - Fundamentaler Unterschied zu linearer Algebra: nur ganze Zahlen als Koeffizienten, keine reellen. Das macht Basiswechsel viel rigider.
+                        - Anschaulich: kariertes Papier, schief gedruckt. Jeder Kreuzungspunkt ist ein Gitterpunkt. Die Seitenvektoren eines Kästchens sind die Basis.
+                        - Historisch: Gauß hatte schon um 1800 einen 2D-Algorithmus zum Finden des kürzesten Vektors — das Problem ist also über 200 Jahre alt.
+                        - Determinante det(L) = |det(B)| ist basisunabhängig und misst die Dichte des Gitters. Kleines det → dichtes Gitter → kurze Vektoren.
+                        - Minkowski (1889): In jedem n-dim Gitter gibt es garantiert einen Vektor der Länge ≤ √n · det(L)^{1/n}. Das garantiert nur die Existenz — nichts über das Finden.
+                        - In 2D trivial, in Dimension 500 (wie bei Kyber) exponentiell schwer.
                     </aside>
                 </section>
 
                 <section>
                     <h3>Basen sind nicht eindeutig</h3>
-                    <div class="grid-2" style="align-items:center">
-                        <div style="display:flex;justify-content:center">
+                    <div class="grid-2 items-center">
+                        <div class="flex-center">
                             <svg id="svg-lattice-bases" width="320" height="280" viewBox="0 0 320 280" class="lattice-svg"></svg>
                         </div>
-                        <div style="text-align:left;padding-left:0.5em">
+                        <div class="text-left-pad">
                             <div class="card good-basis fragment">
                                 <h4>„Gute" Basis</h4>
                                 <p class="small-text">kurz, fast orthogonal → <span class="highlight">leicht</span></p>
                             </div>
-                            <div class="card bad-basis fragment" style="margin-top:0.6em">
+                            <div class="card bad-basis fragment mt-lg">
                                 <h4>„Schlechte" Basis</h4>
                                 <p class="small-text">lang, fast parallel → <span class="color-red">schwer</span></p>
                             </div>
-                            <p class="fragment small-text" style="margin-top:0.7em">
-                                <span class="highlight">Krypto-Idee:</span><br>
-                                privat = gute Basis<br>
-                                öffentlich = schlechte Basis
-                            </p>
                         </div>
                     </div>
                     <aside class="notes">
-                        - Gleiche Punkte, komplett andere Vektoren
-                        - Kann nicht orthonormalisieren — nur ganzzahlige Operationen
-                        - Das ist die Grundidee gitterbasierter Kryptografie
+                        - Gleiche Gitterpunkte, aber komplett andere Basisvektoren — beide Basen sind gleichwertig mathematisch.
+                        - Zwei Basen B, B' beschreiben genau dann dasselbe Gitter, wenn B' = B·U mit einer unimodulären Matrix U (ganzzahlig, det = ±1). Das ist der einzig erlaubte Basiswechsel.
+                        - Man kann im Allgemeinen keine orthonormale Basis finden — Gram-Schmidt liefert Brüche, und die sind verboten.
+                        - „Gute" Basis: Vektoren kurz und fast orthogonal → Gram-Schmidt-Koeffizienten klein → SVP leicht lösbar.
+                        - „Schlechte" Basis: Vektoren lang, fast parallel → SVP erscheint schwer, obwohl das Gitter gleich ist.
+                        - Das ist die Kernidee gitterbasierter Kryptografie: öffentlicher Schlüssel = schlechte Basis, privater Schlüssel = gute Basis desselben Gitters.
                     </aside>
                 </section>
             </section>
@@ -101,44 +103,94 @@
 
                 <section>
                     <h3>SVP &amp; Approximation</h3>
-                    <div class="grid-2" style="align-items:center">
-                        <div style="display:flex;justify-content:center">
+                    <div class="grid-2 items-center">
+                        <div class="flex-center">
                             <svg id="svg-lattice-svp" width="320" height="280" viewBox="0 0 320 280" class="lattice-svg"></svg>
                         </div>
-                        <div style="text-align:left;padding-left:0.5em">
+                        <div class="text-left-pad">
                             <div class="box box-accent">
                                 <p><strong>SVP:</strong> Finde kürzesten Nicht-Null-Vektor</p>
-                                <p class="small-text color-muted" style="margin-top:0.3em">$\|\mathbf{v}\| = \lambda_1(\mathcal{L})$</p>
+                                <p class="small-text color-muted mt-sm">$\|\mathbf{v}\| = \lambda_1(\mathcal{L})$</p>
                             </div>
-                            <div class="box fragment" style="margin-top:0.6em;border-left:3px solid #f59e0b">
+                            <div class="box fragment mt-lg box-orange">
                                 <p><strong>γ-SVP:</strong> Vektor im orangenen Bereich reicht</p>
-                                <p class="small-text color-muted" style="margin-top:0.3em">$\|\mathbf{v}\| \leq \gamma \cdot \lambda_1$</p>
+                                <p class="small-text color-muted mt-sm">$\|\mathbf{v}\| \leq \gamma \cdot \lambda_1$</p>
                             </div>
-                            <p class="fragment small-text" style="margin-top:0.6em">
+                            <p class="fragment small-text mt-lg">
                                 Je größer γ, desto <span class="highlight">mehr gültige Antworten</span> → leichter
                             </p>
                         </div>
                     </div>
+                    <p class="cite-bar">[2] [6] [21]</p>
                     <aside class="notes">
-                        - Roter Kreis: exaktes SVP. Orangener Kreis: γ-Approximation
-                        - In 2D trivial, in Dimension 500+ exponentiell schwer
+                        - λ₁(L) = Länge des kürzesten Nicht-Null-Vektors — das ist die Zielgröße.
+                        - Die Norm macht einen Unterschied: Für ℓ∞ (Maximum-Norm) war NP-Härte schon 1981 bekannt (van Emde Boas). Für die kryptografisch relevante ℓ₂ (euklidisch) erst 1998 — und nur randomisiert.
+                        - γ-SVP: statt exakter Antwort reicht ein Vektor der Länge ≤ γ·λ₁. Mit wachsendem γ werden immer mehr Antworten akzeptabel → Problem wird leichter.
+                        - LLL (1982) löst γ-SVP mit γ = 2^{(n-1)/2} in Polynomialzeit — exponentieller Faktor, aber polynomielle Laufzeit.
+                        - Die interessante Frage: Wo genau kippt die Komplexität? Das ist noch nicht vollständig verstanden.
+                        - Auch die reine Berechnung der Länge λ₁ (ohne den Vektor) gilt als schwer — in der Theorie oft genau diese Entscheidungsversion untersucht.
                     </aside>
                 </section>
 
                 <section>
-                    <h3>GapSVP &amp; CVP</h3>
-                    <div class="box box-accent">
-                        <p><strong>GapSVP$_\gamma$</strong> — Entscheidungsversion (Promise-Problem)</p>
-                        <div class="grid-2" style="margin-top:0.5em">
-                            <div class="box yes-box"><span class="badge badge-blue">YES</span> <p class="small-text" style="margin-top:0.2em">$\lambda_1 \leq d$</p></div>
-                            <div class="box no-box"><span class="badge badge-red">NO</span> <p class="small-text" style="margin-top:0.2em">$\lambda_1 > \gamma \cdot d$</p></div>
+                    <h3>GapSVP$_\gamma$ — Promise-Problem</h3>
+                    <div class="grid-2 items-center">
+                        <div class="flex-center">
+                            <svg id="svg-gapsvp" width="320" height="280" viewBox="0 0 320 280" class="lattice-svg"></svg>
                         </div>
-                        <p class="small-text color-muted" style="margin-top:0.3em">Grauzone dazwischen: jede Antwort ok</p>
+                        <div class="text-left-pad">
+                            <div class="box box-accent">
+                                <p class="small-text color-muted">Nur Extremfälle garantiert:</p>
+                                <div class="flex-gap mt-sm">
+                                    <div class="box yes-box flex-1-center">
+                                        <span class="badge badge-blue">YES</span>
+                                        <p class="small-text mt-sm">$\lambda_1 \leq d$</p>
+                                    </div>
+                                    <div class="box no-box flex-1-center">
+                                        <span class="badge badge-red">NO</span>
+                                        <p class="small-text mt-sm">$\lambda_1 > \gamma \cdot d$</p>
+                                    </div>
+                                </div>
+                                <p class="small-text color-muted mt-base">Dazwischen: beliebige Antwort erlaubt</p>
+                            </div>
+                            <p class="small-text mt-lg">Je größer $\gamma$, desto <span class="highlight">leichter</span> die Frage</p>
+                        </div>
                     </div>
-                    <div class="box fragment" style="margin-top:0.7em">
-                        <p><strong>CVP</strong> (Closest Vector Problem): Nächster Gitterpunkt zu externem Punkt</p>
-                        <p class="small-text" style="margin-top:0.3em"><span class="highlight">CVP ≥ SVP</span> in der Schwierigkeit</p>
+                    <p class="cite-bar">[2] [6] [9]</p>
+                    <aside class="notes">
+                        - GapSVP ist eine Entscheidungsversion von SVP — man fragt nicht „wie kurz ist der kürzeste Vektor?", sondern nur: ist er kürzer als d, oder länger als γ·d?
+                        - Der entscheidende Trick: Der Bereich zwischen d und γ·d muss gar nicht beantwortet werden — das nennt man Promise-Problem. Das erleichtert die Analyse enorm.
+                        - In der Visualisierung: blauer Kreis = YES-Grenze (d), oranger Kreis = NO-Grenze (γ·d), gelbe Zone = Lücke.
+                        - Mit wachsendem γ wird GapSVP leichter: GapSVP_{γ'} reduziert sich auf GapSVP_γ für γ' ≥ γ. Mehr Lücke = einfachere Frage.
+                        - GapSVP liegt für jedes γ ≥ 1 in NP: Ein kurzer Vektor v mit ‖v‖ ≤ d ist ein polynomiell verifizierbares Zertifikat.
+                    </aside>
+                </section>
+
+                <section>
+                    <h3>CVP — Closest Vector Problem</h3>
+                    <div class="grid-2 items-center">
+                        <div class="flex-center">
+                            <svg id="svg-cvp" width="320" height="280" viewBox="0 0 320 280" class="lattice-svg"></svg>
+                        </div>
+                        <div class="text-left-pad">
+                            <div class="box box-accent">
+                                <p><strong>CVP:</strong> Gegeben Zielpunkt $t \notin \mathcal{L}$</p>
+                                <p class="small-text color-muted mt-sm">Finde nächsten Gitterpunkt zu $t$</p>
+                            </div>
+                            <div class="box box-blue fragment mt-lg">
+                                <p class="small-text"><span class="highlight">SVP $\leq_p$ CVP</span></p>
+                                <p class="small-text color-muted mt-xs">Umkehrung unbekannt — CVP gilt als schwerer</p>
+                            </div>
+                        </div>
                     </div>
+                    <p class="cite-bar">[2] [6] [9]</p>
+                    <aside class="notes">
+                        - CVP: gegeben eine Basis und einen Zielpunkt t außerhalb des Gitters, finde den nächstgelegenen Gitterpunkt. Anschaulich: t ist ein „Fehlervektor" — typisch in Kryptografie und Codierungstheorie.
+                        - In der Visualisierung: roter Punkt = Zielpunkt t, grüner Kreis = nächster Gitterpunkt, gestrichelte Linie = minimale Distanz.
+                        - SVP reduziert sich auf CVP (durch Einbettungstricks), aber nicht umgekehrt. CVP gilt daher als das natürlich schwerere Problem.
+                        - Anwendung: Bei LWE-Kryptografie entspricht das Entschlüsseln dem Lösen von CVP — gegeben ein verrauschtes lineares Gleichungssystem, finde den originalen Gitterpunkt.
+                        - Beide Varianten tauchen später wieder auf: GapSVP ist das zentrale Worst-Case-Problem in der Worst-Case-to-Average-Case-Reduktion.
+                    </aside>
                 </section>
             </section>
 
@@ -147,30 +199,40 @@
                 <section class="section-header">
                     <span class="section-number">03</span>
                     <h2>Komplexitätstheoretische<br>Einordnung</h2>
-                    <p class="section-subtitle">Herzstück des Vortrags</p>
                 </section>
 
                 <section>
                     <h3>NP-Härte von SVP</h3>
-                    <div class="grid-2" style="margin-top:0.4em">
+                    <div class="grid-2 mt-md">
                         <div class="card fragment">
                             <h4>Ajtai (1998)</h4>
                             <p class="small-text">Exaktes SVP in $\ell_2$ ist <span class="highlight">NP-hart</span></p>
-                            <p class="small-text color-muted">⚠ randomisiert — deterministisch offen!</p>
                         </div>
                         <div class="card fragment">
                             <h4>Micciancio (2001)</h4>
                             <p class="small-text">Auch <span class="highlight">Approximation</span> für jede Konstante γ NP-hart</p>
                         </div>
                     </div>
-                    <div class="box fragment" style="margin-top:0.7em;border-left:3px solid var(--accent-blue)">
-                        <p class="small-text"><strong>Idee:</strong> SAT-Formel wird in Gittergeometrie kodiert. Erfüllbar → kurzer Vektor. Nicht erfüllbar → alle Vektoren lang. <em>SVP lösen = SAT lösen.</em></p>
+                    <div class="box fragment mt-xl box-blue">
+                        <p class="small-text"><strong>Idee:</strong> SAT-Formel wird in Gittergeometrie kodiert.</p>
+                        <p class="small-text">Erfüllbar → kurzer Vektor.</p>
+                        <p class="small-text">Nicht erfüllbar → alle Vektoren lang.</p>
+                        <p class="small-text"><em>SVP lösen = SAT lösen.</em></p>
                     </div>
+                    <p class="cite-bar">[2] [3] [5]</p>
+                    <aside class="notes">
+                        - Ajtai 1998: konstruiert aus einer SAT-Instanz ein Gitter mit besonderen geometrischen Eigenschaften. Erfüllbar → Gitter hat kurzen Vektor. Nicht erfüllbar → alle Vektoren lang.
+                        - Entscheidend: Die Konstruktion ist randomisiert — Ajtai trifft zufällige Wahlen, die mit hoher Wahrscheinlichkeit die richtigen geometrischen Eigenschaften liefern. Ob das deterministisch geht: seit 25+ Jahren offen.
+                        - Das Ergebnis bedeutet: SVP ∉ RP, außer NP = RP. (RP = Klasse der Probleme, die randomisiert in Polynomialzeit gelöst werden können.)
+                        - Micciancio 2001: Sogar Approximation mit konstantem Faktor γ ist noch NP-hart. Technik: „lokal dichtes Gitter" — in einer bestimmten Region viel dichter als die globale Dichte. Die NP-harte Frage ist, diese Region zu finden.
+                        - Weitere Verschärfungen: Haviv & Regev 2007 nutzen Tensorprodukte für Hardness Amplification. Unter stärkeren Annahmen (NP ⊄ RSUBEXP) auch fast-polynomielle Faktoren γ = n^{c/log log n}.
+                        - Was noch offen ist: Kann man die konstante Schranke auf polynomielle Faktoren in γ heben? Das wäre eine massive Schärfung.
+                    </aside>
                 </section>
 
                 <section>
                     <h3>Die Komplexitätslandschaft</h3>
-                    <svg width="100%" viewBox="0 0 960 170" style="max-width:960px;margin:0.3em auto;display:block">
+                    <svg width="100%" viewBox="0 0 960 170" class="complexity-svg">
                         <!-- Segments -->
                         <rect x="20" y="20" width="220" height="80" rx="8" ry="8" fill="#fee2e2" stroke="#fca5a5" stroke-width="1"/>
                         <rect x="240" y="20" width="200" height="80" rx="0" fill="#fef9c3" stroke="#fde68a" stroke-width="1"/>
@@ -196,53 +258,82 @@
                         <text x="480" y="152" text-anchor="middle" font-size="14" fill="#a1a1aa" font-family="Inter,sans-serif">Approximationsfaktor γ wächst →</text>
                         <text x="930" y="152" text-anchor="end" font-size="15" fill="#16a34a" font-weight="500" font-family="Inter,sans-serif">leicht</text>
                     </svg>
-                    <p class="fragment small-text" style="margin-top:0.6em">Diese feine Abstufung ist <span class="highlight">einzigartig</span> — bei SAT gibt es nur „schwer oder leicht"</p>
-                    <p class="fragment small-text color-muted">Wo genau die Härte kippt, ist eine der großen offenen Fragen</p>
+                    <p class="fragment small-text mt-lg"><span class="highlight">Einzigartige</span> Abstufung — bei SAT gibt es nur schwer oder leicht.</p>
+                    <p class="fragment small-text color-muted">Wo genau die Härte kippt, ist eine der großen offenen Fragen.</p>
+                    <p class="cite-bar">[3] [5] [11] [21]</p>
+                    <aside class="notes">
+                        - Das Besondere an SVP: Es hat eine kontinuierliche Komplexitätsstruktur. Bei SAT, Graph-Coloring, TSP gibt es nur schwer (NP-hart) oder leicht (in P). Hier gibt es einen echten Gradienten.
+                        - NP-hart: γ = O(1) sicher (Micciancio 2001). Bis γ = n^{c/log log n} unter stärkeren Annahmen (Haviv-Regev 2007).
+                        - Terra incognita: Zwischen γ ≈ n^{c/log log n} und γ ≈ √n ist völlig unklar, ob NP-hart oder nicht. Niemand weiß, ob da noch Härte ist oder schon Leichtigkeit.
+                        - NP ∩ coNP: ab γ = c√n durch Aharonov & Regev 2005. Wenn das NP-hart wäre, würde die polynomielle Hierarchie kollabieren (NP ⊆ coNP) — daher gilt es als wahrscheinlich nicht NP-hart.
+                        - In P: ab γ ≈ 2^{n/2} durch LLL in Polynomialzeit.
+                        - Diese Landschaft ist der Grund, warum Gitter für Kryptografie so interessant sind: Der kryptografisch nützliche Bereich (√n bis n) liegt genau in der Zone, die vermutlich nicht NP-hart ist, aber trotzdem exponentiell schwer erscheint.
+                        - Vergleich SAT: Man wüsste sofort ob P=NP. Bei SVP hat man eine viel reichere Struktur zu verstehen.
+                    </aside>
                 </section>
 
                 <section>
                     <h3>GapSVP$_{c\sqrt{n}} \in$ NP $\cap$ coNP</h3>
-                    <p class="small-text color-muted" style="margin-bottom:0.5em">Aharonov &amp; Regev (2005)</p>
-                    <div class="grid-2" style="margin-top:0.2em">
+                    <p class="small-text color-muted mb-md">Aharonov &amp; Regev (2005)</p>
+                    <div class="grid-2 mt-xs">
                         <div class="box box-accent fragment">
-                            <h4>NP-Zeuge <span class="small-text color-muted">(trivial)</span></h4>
+                            <h4>NP-Zeuge</h4>
                             <p class="small-text">Kurzen Vektor vorzeigen → prüfen</p>
                         </div>
-                        <div class="box fragment" style="border-left:3px solid var(--accent-red)">
-                            <h4>coNP-Zeuge <span class="small-text color-muted">(überraschend!)</span></h4>
+                        <div class="box box-red fragment">
+                            <h4>coNP-Zeuge</h4>
                             <p class="small-text">Wie beweist man, dass <em>kein</em> kurzer Vektor existiert?</p>
                         </div>
                     </div>
-                    <div class="box fragment" style="margin-top:0.6em;border-left:3px solid #16a34a">
+                    <div class="box box-green fragment mt-lg">
                         <p class="small-text"><strong>Trick: Duales Gitter $\mathcal{L}^*$</strong></p>
-                        <p class="small-text" style="margin-top:0.3em">Transference-Theorem: $\lambda_1(\mathcal{L})$ groß $\Leftrightarrow$ $\lambda_1(\mathcal{L}^*)$ klein — wie eine <span class="highlight">Wippe</span></p>
-                        <p class="small-text" style="margin-top:0.3em">→ Zeige kurze Vektoren im Dual = beweise <em>Abwesenheit</em> im Original</p>
+                        <p class="small-text mt-sm">Transference-Theorem: $\lambda_1(\mathcal{L})$ groß $\Leftrightarrow$ $\lambda_1(\mathcal{L}^*)$ klein — wie eine <span class="highlight">Wippe</span></p>
+                        <p class="small-text mt-sm">→ Zeige kurze Vektoren im Dual = beweise <em>Abwesenheit</em> im Original</p>
                     </div>
-                    <p class="fragment small-text color-muted" style="margin-top:0.4em">Weg: QMA-Beweis (2003) → „Dequantisierung" → klassischer coNP-Zeuge</p>
+                    <p class="fragment small-text color-muted mt-md">Weg: QMA-Beweis (2003) → „Dequantisierung" → klassischer coNP-Zeuge</p>
+                    <p class="cite-bar">[9] [10] [11]</p>
+                    <aside class="notes">
+                        - NP-Seite trivial: Ein kurzer Vektor v ist das Zertifikat. Verifizierer prüft in Polynomialzeit: (a) v ≠ 0, (b) v ∈ L(B) — durch Lösen von Bx = v über ℤ, (c) ‖v‖ ≤ d.
+                        - coNP-Seite ist das eigentlich Schwierige: Wie beweist man, dass KEIN kurzer Vektor existiert? Es gibt exponentiell viele Gittervektoren, die zu prüfen wären.
+                        - Trick: Das duale Gitter L* = {u : ⟨u,v⟩ ∈ ℤ für alle v ∈ L}. Transference-Theorem: λ₁(L) groß genau dann, wenn λ₁(L*) klein. Wie eine Wippe.
+                        - Historische Entwicklung: Lagarias-Lenstra-Schnorr 1990 (n^1.5 in coNP) → Banaszczyk 1993 (n in coNP, mit Geometrie der Zahlen) → Goldreich-Goldwasser 2000 (√(n/log n) in coAM, interaktiver Beweis) → Aharonov-Regev 2005 (c√n in NP ∩ coNP).
+                        - Spektakulärer Weg bei A&R: Erst 2003 zeigten sie coGapSVP ∈ QMA (Quantum Merlin-Arthur = Quanten-NP). Der Quantenzeuge war eine Überlagerung von Zuständen. Dann „dequantisierten" sie den Beweis — ersetzten den Quantenzeugen durch einen klassischen coNP-Zeugen. Diesen Weg „von quantenmechanisch zu klassisch" nennen sie selbst ungewöhnlich.
+                        - Implikation für die Polynomielle Hierarchie: Wenn GapSVP für γ ≥ c√n NP-hart wäre (auch unter Cook-Reduktionen), würde NP ⊆ coNP folgen — Kollaps der PH. Daher gilt es als stark unwahrscheinlich, dass dieser Bereich NP-hart ist.
+                        - Der coNP-Zeuge besteht aus N = n^{4ℓ} Vektoren aus dem dualen Gitter, die als „Periodizitätsdetektor" fungieren.
+                    </aside>
                 </section>
 
                 <section>
                     <h3>Worst-Case = Average-Case</h3>
-                    <div class="grid-2" style="margin-top:0.4em">
+                    <div class="grid-2 mt-md">
                         <div class="card fragment">
-                            <h4 style="color:var(--accent-red)">RSA / SAT</h4>
-                            <p class="small-text">Zufällige Instanzen oft <span style="color:#16a34a">leicht</span></p>
+                            <h4 class="color-red">RSA / SAT</h4>
+                            <p class="small-text">Zufällige Instanzen oft <span class="color-green">leicht</span></p>
                             <p class="small-text">Worst-Case <span class="color-red">schwer</span></p>
                             <p class="small-text color-muted"><em>Keine Verbindung bekannt</em></p>
                             <p class="small-text color-muted">Sicherheit = Hoffnung</p>
                         </div>
-                        <div class="card fragment" style="border:2px solid var(--accent-blue)">
-                            <h4 style="color:var(--accent-blue)">Gitterprobleme</h4>
+                        <div class="card fragment card-highlighted">
+                            <h4 class="color-blue">Gitterprobleme</h4>
                             <p class="small-text"><span class="color-red">Alle</span> Instanzen gleich schwer</p>
                             <p class="small-text">Zufällig lösen = Worst-Case lösen</p>
-                            <p class="small-text highlight" style="margin-top:0.3em"><strong>Einzigartig!</strong></p>
+                            <p class="small-text highlight mt-sm"><strong>Einzigartig!</strong></p>
                             <p class="small-text color-muted">Sicherheit = Beweis</p>
                         </div>
                     </div>
-                    <div class="box fragment" style="margin-top:0.6em;border-left:3px solid var(--accent-blue)">
+                    <div class="box box-blue fragment mt-lg">
                         <p class="small-text"><strong>Ajtai (1996):</strong> Zufällige SIS-Instanzen lösen → <em>jede</em> SVP-Worst-Case-Instanz lösen</p>
-                        <p class="small-text color-muted" style="margin-top:0.2em">Verbindungsfaktor $\tilde{O}(n)$ (MR 2007) · Bogdanov &amp; Trevisan: für allg. NP vermutlich unmöglich</p>
+                        <p class="small-text color-muted mt-xs">Verbindungsfaktor $\tilde{O}(n)$ (MR 2007) · Bogdanov &amp; Trevisan: für allg. NP vermutlich unmöglich</p>
                     </div>
+                    <p class="cite-bar">[1] [16] [38]</p>
+                    <aside class="notes">
+                        - Das Kernargument: Bei SAT und fast allen NP-harten Problemen sind zufällige Instanzen oft leicht — man kann nicht von Average-Case auf Worst-Case schließen. Bogdanov & Trevisan zeigten: Für allgemeine NP-Probleme gibt es relativ zu einem Orakel keine solche Verbindung.
+                        - Bei Gittern ist es umgekehrt: Wenn man zufällige SIS-Instanzen lösen kann, kann man damit jede beliebige Worst-Case-SVP-Instanz lösen. Die Reduktion geht in die „falsche" Richtung — von Average-Case zu Worst-Case.
+                        - SIS-Problem: Gegeben zufällige Matrix A ∈ ℤ_q^{n×m}, finde kurzen Nicht-Null-Vektor z mit Az = 0 mod q. Ein zufälliges lineares Gleichungssystem mit kurzer Lösung.
+                        - Ajtai entdeckte das 1996. Der ursprüngliche Verbindungsfaktor war riesig (> n^8). Micciancio & Regev 2007 verbesserten ihn auf Õ(n) — fast linear — mit Gaußverteilungen über Gittern und Fourier-Analysis.
+                        - Der Faktor Õ(n) liegt nahe der √n-Grenze, ab der GapSVP in NP ∩ coNP liegt. Eine Verbesserung auf o(√n) wäre kryptografisch gefährlich — die Worst-Case-Annahme wäre in einem vermutlich leichten Bereich.
+                        - Praktische Konsequenz: Kryptografische Sicherheit basiert nicht auf Hoffnung über typische Fälle (wie RSA), sondern auf der nachgewiesenen Worst-Case-Schwierigkeit eines gut untersuchten Problems.
+                    </aside>
                 </section>
 
                 <section>
@@ -256,7 +347,17 @@
                         <div class="reduction-arrow">↓<span class="reduction-label">kryptografische Konstruktionen</span></div>
                         <div class="reduction-box box-bottom">ML-KEM (FIPS 203) · ML-DSA (FIPS 204)</div>
                     </div>
-                    <p class="fragment small-text" style="margin-top:0.4em"><strong>Kyber brechen = SVP im Worst-Case lösen</strong> <span class="color-muted">— kein bekannter Algorithmus kann das</span></p>
+                    <p class="fragment small-text mt-md"><strong>Kyber brechen = SVP im Worst-Case lösen</strong> <span class="color-muted">— kein bekannter Algorithmus kann das</span></p>
+                    <p class="cite-bar">[1] [16] [17] [18] [19]</p>
+                    <aside class="notes">
+                        - Die Kette ist eine mathematische Garantie, keine Hoffnung. Jeder Pfeil ist eine bewiesene Reduktion.
+                        - SIS: gegeben zufällige Matrix A, finde kurzen Vektor z mit Az = 0 mod q. Das ist das grundlegende Sicherheitsproblem hinter Signaturen.
+                        - LWE: gegeben Paare (a_i, b_i = ⟨a_i, s⟩ + e_i mod q) mit kleinen Fehlern e_i, finde den geheimen Vektor s. Kleine Fehler machen das lineare System undurchdringlich.
+                        - Regevs Reduktion 2005 nutzt einen Quantenalgorithmus als Zwischenschritt — ein sehr ungewöhnlicher Ansatz. Peikert 2009 gab eine klassische Variante für große Moduli.
+                        - ML-KEM/Kyber: Sicherheit basiert auf Module-LWE, eine strukturierte Variante über Polynomringe. Langlois & Stehlé 2015 zeigten Worst-Case-to-Average-Case auch für diese Module-Variante.
+                        - „Kyber brechen = SVP lösen" ist nicht nur ein Slogan: Es ist eine bewiesene mathematische Äquivalenz durch die Reduktionskette. Wer Kyber bricht, löst damit automatisch SVP im Worst-Case — und umgekehrt.
+                        - Kein bekannter Quantenalgorithmus ist besser als 2^{Ω(n)} für SVP. Das ist der eigentliche Kernpunkt der Post-Quantum-Sicherheit.
+                    </aside>
                 </section>
             </section>
 
@@ -269,35 +370,56 @@
 
                 <section>
                     <h3>LLL-Algorithmus (1982)</h3>
-                    <div class="grid-2" style="align-items:center">
-                        <div style="text-align:center">
-                            <p class="small-text color-muted" style="margin-bottom:0.3em">Vorher: „schlechte" Basis</p>
-                            <svg id="svg-lll-bad" width="260" height="220" viewBox="0 0 260 220" class="lattice-svg"></svg>
+                    <p class="small-text color-muted mb-md"><strong>LLL</strong> = Lenstra–Lenstra–Lovász &mdash; <em>kurze, fast orthogonale</em> Gitterbasis in Polynomialzeit</p>
+                    <div class="grid-2 items-start gap-wide">
+                        <div class="text-center">
+                            <div class="fragment" data-fragment-index="1">
+                                <p class="small-text color-muted mb-sm">Vorher: schlechte Basis</p>
+                                <svg id="svg-lll-bad" width="260" height="220" viewBox="0 0 260 220" class="lattice-svg block-center"></svg>
+                            </div>
+                            <div class="box fragment mt-3xl" data-fragment-index="3"><p class="small-text"><strong>Laufzeit:</strong> $\mathrm{poly}(n)$</p></div>
                         </div>
-                        <div style="text-align:center">
-                            <p class="small-text" style="margin-bottom:0.3em;color:#16a34a">Nachher: LLL-reduziert</p>
-                            <svg id="svg-lll-good" width="260" height="220" viewBox="0 0 260 220" class="lattice-svg"></svg>
+                        <div class="text-center">
+                            <div class="fragment" data-fragment-index="2">
+                                <p class="small-text color-green mb-sm">Nachher: LLL-reduziert</p>
+                                <svg id="svg-lll-good" width="260" height="220" viewBox="0 0 260 220" class="lattice-svg block-center"></svg>
+                            </div>
+                            <div class="box fragment mt-3xl" data-fragment-index="4"><p class="small-text"><strong>Approximation:</strong> $2^{(n-1)/2}$</p></div>
                         </div>
                     </div>
-                    <div class="grid-2 fragment" style="margin-top:0.5em">
-                        <div class="box"><p class="small-text"><strong>Laufzeit:</strong> $\mathrm{poly}(n)$ ✓</p></div>
-                        <div class="box"><p class="small-text"><strong>Approximation:</strong> $2^{(n-1)/2}$ — exponentiell</p></div>
-                    </div>
-                    <p class="fragment small-text color-muted" style="margin-top:0.4em">Funktioniert wie Bubble Sort: Nachbarvektoren vergleichen, tauschen wenn nötig</p>
+                    <p class="cite-bar">[21] [22]</p>
+                    <aside class="notes">
+                        - LLL = Lenstra-Lenstra-Lovász 1982 — einer der einflussreichsten Algorithmen der theoretischen Informatik. Revolutionär weil erstmals Polynomialzeit mit nichttrivialem Approximationsfaktor.
+                        - Idee: Gram-Schmidt, aber ganzzahlig. Zwei Bedingungen: (1) Größenreduktion: |μ_{i,j}| ≤ 1/2 — man zieht so viel wie möglich von vorherigen Vektoren ab. (2) Lovász-Bedingung: benachbarte Gram-Schmidt-Vektoren dürfen nicht zu schnell kürzer werden.
+                        - Polynomialzeit-Beweis: Die Potentialfunktion D = Π det(L(b₁,...,bᵢ))² ist eine positive ganze Zahl, die bei jedem Basisvektortausch um mindestens Faktor 4/3 abnimmt → terminiert nach polynomiell vielen Schritten.
+                        - Approximationsfaktor 2^{(n-1)/2} ist exponentiell — für n = 500 wäre das riesig. In der Praxis aber oft viel besser als die Worst-Case-Garantie.
+                        - Anwendungen direkt 1982: Brechen von Knapsack-Kryptosystemen (die bis dahin als sicher galten), Faktorisierung von Polynomen über ℤ, ganzzahlige Programmierung in fester Dimension.
+                        - BKZ (Schnorr): Verallgemeinerung, die intern exaktes SVP in Blöcken der Größe k löst. Je größer k, desto besser γ = 2^{O(n/k)}, desto mehr Zeit 2^{O(k)}.
+                    </aside>
                 </section>
 
                 <section>
                     <h3>Algorithmen-Überblick</h3>
-                    <table>
+                    <table class="table-sm">
                         <thead><tr><th>Algorithmus</th><th>Faktor γ</th><th>Laufzeit</th><th>Speicher</th></tr></thead>
                         <tbody>
-                            <tr><td>LLL (1982)</td><td>$2^{(n-1)/2}$</td><td style="color:#16a34a">poly$(n)$</td><td style="color:#16a34a">poly$(n)$</td></tr>
-                            <tr><td>BKZ-$k$ (Schnorr)</td><td>$2^{O(n/k)}$</td><td>$2^{O(k)}$</td><td style="color:#16a34a">poly$(n)$</td></tr>
-                            <tr><td>Enumeration (1983)</td><td>exakt</td><td>$n^{O(n)}$</td><td style="color:#16a34a">poly$(n)$</td></tr>
-                            <tr><td>Sieving (AKS 2001)</td><td>exakt</td><td>$2^{n+o(n)}$</td><td style="color:#b45309">$2^{n+o(n)}$</td></tr>
+                            <tr><td>LLL (1982)</td><td>$2^{(n-1)/2}$</td><td class="color-green">poly$(n)$</td><td class="color-green">poly$(n)$</td></tr>
+                            <tr><td>BKZ-$k$ (Schnorr)</td><td>$2^{O(n/k)}$</td><td>$2^{O(k)}$</td><td class="color-green">poly$(n)$</td></tr>
+                            <tr><td>Enumeration (1983)</td><td>exakt</td><td>$n^{O(n)}$</td><td class="color-green">poly$(n)$</td></tr>
+                            <tr><td>Sieving (AKS 2001)</td><td>exakt</td><td>$2^{n+o(n)}$</td><td class="color-gold">$2^{n+o(n)}$</td></tr>
                         </tbody>
                     </table>
-                    <p class="fragment small-text" style="margin-top:0.6em">Offene Frage: $2^{O(n)}$ Zeit mit $2^{o(n)}$ Speicher?</p>
+                    <p class="fragment small-text mt-lg">Offene Frage: $2^{O(n)}$ Zeit mit $2^{o(n)}$ Speicher?</p>
+                    <p class="cite-bar">[21] [22] [23] [24] [28]</p>
+                    <aside class="notes">
+                        - LLL: Polynomialzeit, aber exponentieller Approximationsfaktor. Der erste Schritt — reicht für viele Anwendungen.
+                        - BKZ (Block-Korkine-Zolotarev, Schnorr): Verallgemeinert LLL auf Blöcke der Größe k. Löst intern exaktes SVP in Dimension k. Trade-off: k = 2 ist LLL, k = n ist exaktes SVP. In der Praxis wird BKZ mit k ≈ 20-60 verwendet.
+                        - Enumeration (Kannan 1983): Erschöpfende Aufzählung aller Gittervektoren innerhalb einer Kugel nach Gram-Schmidt-Preprocessing. Laufzeit n^{O(n)} — superexponentiell, aber Speicher nur poly(n). In der Praxis bis Dimension ≈60-80 oft schneller als Sieving.
+                        - Sieving (AKS 2001): Starte mit 2^{O(n)} zufälligen Vektoren in einer großen Kugel. Iterativ ersetze Paare naher Vektoren durch ihre Differenz. Nach genug Runden: kürzester Vektor. Beweis über Packing-Argument. Nachteil: Speicher ebenfalls 2^{O(n)}.
+                        - GaussSieve (Micciancio-Voulgaris 2010): Praktischere Sieving-Variante. In Experimenten deutlich effizienter.
+                        - Offene Frage: 2^{O(n)} Zeit mit 2^{o(n)} Speicher? Das würde Enumeration (gut in Speicher) und Sieving (gut in Zeit) kombinieren. Noch niemand hat das geschafft.
+                        - Kein Quantenvorteil bekannt: Grover gibt einen √-Speedup bei Enumeration, also 2^{n/2} statt 2^n — aber das ist kein grundlegend besserer Algorithmus.
+                    </aside>
                 </section>
             </section>
 
@@ -309,15 +431,25 @@
                 </section>
                 <section>
                     <h3>NIST-Standards (August 2024)</h3>
-                    <div class="grid-2" style="margin-top:0.4em">
-                        <div class="box" style="border-left:3px solid var(--accent-red)"><h4>Shors Algorithmus</h4><p class="small-text">RSA &amp; ECC in Polynomialzeit gebrochen</p><p class="small-text color-muted">„Harvest now, decrypt later"</p></div>
-                        <div class="box" style="border-left:3px solid #16a34a"><h4>Gitterbasierte Krypto</h4><p class="small-text">Kein Quantenalg. besser als $2^{\Omega(n)}$</p><p class="small-text color-muted">+ Worst-Case-Sicherheit</p></div>
+                    <div class="grid-2 mt-md">
+                        <div class="box box-red"><h4>Shors Algorithmus</h4><p class="small-text">RSA &amp; ECC in Polynomialzeit gebrochen</p><p class="small-text color-muted">„Harvest now, decrypt later"</p></div>
+                        <div class="box box-green"><h4>Gitterbasierte Krypto</h4><p class="small-text">Kein Quantenalg. besser als $2^{\Omega(n)}$</p><p class="small-text color-muted">+ Worst-Case-Sicherheit</p></div>
                     </div>
-                    <div class="grid-3 fragment" style="margin-top:0.7em">
-                        <div class="card"><span class="badge badge-blue">FIPS 203</span><h4 style="margin-top:0.3em">ML-KEM</h4><p class="small-text color-muted">Schlüsselaustausch<br>Module-LWE</p></div>
-                        <div class="card"><span class="badge badge-blue">FIPS 204</span><h4 style="margin-top:0.3em">ML-DSA</h4><p class="small-text color-muted">Signaturen<br>Module-LWE/SIS</p></div>
-                        <div class="card"><span class="badge badge-blue">FIPS 205</span><h4 style="margin-top:0.3em">SLH-DSA</h4><p class="small-text color-muted">Hash-basiert<br>Backup</p></div>
+                    <div class="grid-3 fragment mt-xl">
+                        <div class="card"><span class="badge badge-blue">FIPS 203</span><h4 class="mt-sm">ML-KEM</h4><p class="small-text color-muted">Schlüsselaustausch<br>Module-LWE</p></div>
+                        <div class="card"><span class="badge badge-blue">FIPS 204</span><h4 class="mt-sm">ML-DSA</h4><p class="small-text color-muted">Signaturen<br>Module-LWE/SIS</p></div>
+                        <div class="card"><span class="badge badge-blue">FIPS 205</span><h4 class="mt-sm">SLH-DSA</h4><p class="small-text color-muted">Hash-basiert<br>Backup</p></div>
                     </div>
+                    <p class="cite-bar">[16] [17] [18] [19] [46]</p>
+                    <aside class="notes">
+                        - Shors Algorithmus (1994) bricht RSA (Faktorisierung) und ECC (diskreter Logarithmus) in Quantenpolynomialzeit. Noch kein Quantencomputer groß genug — aber „Harvest now, decrypt later": Daten werden heute abgefangen, in Zukunft entschlüsselt. Staatliche Akteure tun das bereits.
+                        - NIST-Prozess: 2016 gestartet, 69 Kandidaten eingereicht, 8 Jahre öffentliche Kryptoanalyse, am 13. August 2024 drei finale Standards.
+                        - ML-KEM (Kyber, FIPS 203): Schlüsselaustausch über Module-LWE. Sehr effizient — ~1.5 KB Schlüssel, sub-Millisekunden-Handshakes. Empfohlene Variante: ML-KEM-768 mit ~192-bit Sicherheit. Bereits jetzt in Chrome, Firefox, Signal integriert.
+                        - ML-DSA (Dilithium, FIPS 204): Digitale Signaturen über Module-LWE und SIS. Signaturen 2-5 KB, schnelle Verifikation. Design explizit seitenkanalresistent.
+                        - SLH-DSA (SPHINCS+, FIPS 205): Hash-basiert, kein Gitter. Dient als Backup für den Fall, dass Gitter-Annahmen falsch sind. Konservative Sicherheit, aber langsamere und größere Signaturen.
+                        - Warum keine Quantenalgorithmen für SVP? Die Gitterstruktur scheint für Quantencomputer undurchdringlich — Grover gibt nur √-Speedup auf naive Suche, kein struktureller Angriff bekannt.
+                        - Die Sicherheitsargumentationskette: Worst-Case GapSVP schwer → LWE schwer → ML-KEM sicher. Jeder Schritt ist eine bewiesene Reduktion.
+                    </aside>
                 </section>
             </section>
 
@@ -325,7 +457,7 @@
             <section>
                 <section>
                     <h3>Zusammenfassung</h3>
-                    <table style="font-size:0.72em">
+                    <table class="table-sm">
                         <thead><tr><th>Eigenschaft</th><th>Status</th></tr></thead>
                         <tbody>
                             <tr><td>SVP exakt: NP-hart?</td><td><span class="highlight">Ja</span> — randomisiert (Ajtai 1998)</td></tr>
@@ -335,21 +467,27 @@
                             <tr><td>Quantenvorteil bekannt?</td><td><span class="badge badge-red">Nein</span></td></tr>
                         </tbody>
                     </table>
-                    <ol class="open-questions fragment" style="margin-top:0.5em;font-size:0.85em">
+                    <ul class="open-questions fragment mt-base">
                         <li><span class="small-text">Deterministisch NP-hart in $\ell_2$?</span></li>
                         <li><span class="small-text">Wo kippt die Härte? (Terra incognita)</span></li>
                         <li><span class="small-text">Quantenalgorithmen für SVP?</span></li>
-                    </ol>
+                    </ul>
+                    <aside class="notes">
+                        - Deterministisch NP-hart: Ajtais 1998er Beweis ist randomisiert. Seit 25+ Jahren offen ob man die Randomisierung entfernen kann. Die Konstruktion braucht Zufälligkeit um geometrische Eigenschaften zu garantieren — ein echtes technisches Hindernis, kein Artefakt.
+                        - Terra incognita: Zwischen γ ≈ n^{c/log log n} (NP-hart bekannt) und γ ≈ √n (NP ∩ coNP) liegt eine vollständig unverstandene Zone. Ist das Problem dort NP-hart? Wir wissen es nicht. Das ist eine der wichtigsten offenen Fragen der Komplexitätstheorie.
+                        - Quantenalgorithmen: Für Faktorisierung und diskreten Logarithmus gibt es Quantenpolynomialzeit-Algorithmen (Shor). Für SVP: Nichts Vergleichbares bekannt. Grover gibt nur √-Speedup auf naive Suche. Warum? Die Gitterstruktur bietet keinen Ansatzpunkt für Quanten-Fourier-Transformationen wie bei Shor.
+                        - Weitere offene Fragen aus research.md: (a) Ist GapSVP_{n^{2+ε}} NP-hart? Falls ja → LWE-Sicherheit allein aus P ≠ NP. (b) SVP in 2^{O(n)} Zeit mit 2^{o(n)} Speicher? (c) Vollständige Dequantisierung der LWE-Reduktion für polynomielle Moduli?
+                        - Das Zusammenspiel aller Ergebnisse: SVP ist eines der reichhaltigsten Probleme der Komplexitätstheorie — gleichzeitig NP-hart, vermutlich in NP ∩ coNP für mittlere γ, mit Worst-Case-to-Average-Case-Reduktion und ohne bekannten Quantenvorteil.
+                    </aside>
+                </section>
+
+                <section class="title-slide">
+                    <a href="https://github.com/theoleuthardt/shortest-vector-problem-presentation/blob/main/docs/sources.md" target="_blank" class="link-source">Quellenverzeichnis</a>
                 </section>
 
                 <section class="title-slide closing-slide">
-                    <h2>Vielen Dank!</h2>
-                    <div class="box closing-box">
-                        <p>SVP: eines der seltenen Probleme mit</p>
-                        <p><span class="highlight">Worst-Case-to-Average-Case-Reduktion</span></p>
-                        <p class="small-text color-muted" style="margin-top:0.6em">Von abstrakter Geometrie zu NIST-Standards —<br>Fundament der Post-Quantum-Kryptografie</p>
-                    </div>
-                    <p class="small-text color-muted" style="margin-top:1.2em">Fragen?</p>
+                    <h1>Vielen Dank!</h1>
+                    <p class="large-text color-muted fragment mt-3xl">Fragen?</p>
                 </section>
             </section>
 
@@ -360,118 +498,5 @@
     <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/math/math.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
     <script src="script.js"></script>
-
-    <script>
-    (function(){
-        function renderLattice(svgId, opts) {
-            var svg = document.getElementById(svgId);
-            if (!svg) return;
-            var vb = svg.getAttribute('viewBox').split(' ');
-            var W = parseInt(vb[2]), H = parseInt(vb[3]);
-            var ox = W/2, oy = H/2 + 10;
-            var b1 = opts.b1, b2 = opts.b2;
-            var range = opts.range || 4;
-
-            function gp(i,j) { return [ox + i*b1[0] + j*b2[0], oy - (i*b1[1] + j*b2[1])]; }
-            function dist(i,j) { return Math.sqrt((i*b1[0]+j*b2[0])*(i*b1[0]+j*b2[0]) + (i*b1[1]+j*b2[1])*(i*b1[1]+j*b2[1])); }
-
-            var mid = 'm'+svgId;
-            var h = '<defs><marker id="'+mid+'" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>';
-
-            for (var i=-range;i<=range;i++) {
-                var p1=gp(i,-range), p2=gp(i,range);
-                h+='<line x1="'+p1[0]+'" y1="'+p1[1]+'" x2="'+p2[0]+'" y2="'+p2[1]+'" stroke="rgba(0,0,0,0.07)" stroke-width="0.4"/>';
-            }
-            for (var j=-range;j<=range;j++) {
-                var p1=gp(-range,j), p2=gp(range,j);
-                h+='<line x1="'+p1[0]+'" y1="'+p1[1]+'" x2="'+p2[0]+'" y2="'+p2[1]+'" stroke="rgba(0,0,0,0.07)" stroke-width="0.4"/>';
-            }
-
-            var minD=1e9, si=0, sj=0;
-            for (var i=-range;i<=range;i++) for (var j=-range;j<=range;j++) {
-                if (i===0&&j===0) continue;
-                var d=dist(i,j); if (d<minD){minD=d;si=i;sj=j;}
-            }
-
-            if (opts.showSVPCircle) {
-                h+='<circle cx="'+ox+'" cy="'+oy+'" r="'+minD+'" fill="none" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="5,3" opacity="0.6"/>';
-                h+='<text x="'+(ox+8)+'" y="'+(oy-minD-5)+'" fill="#dc2626" font-size="11" font-family="sans-serif">λ₁</text>';
-            }
-            if (opts.showGammaCircle) {
-                var gr=minD*2;
-                h+='<circle cx="'+ox+'" cy="'+oy+'" r="'+gr+'" fill="#f59e0b" fill-opacity="0.06" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="6,4"/>';
-                h+='<text x="'+(ox+8)+'" y="'+(oy-gr-5)+'" fill="#f59e0b" font-size="11" font-family="sans-serif">γ·λ₁</text>';
-                for (var i=-range;i<=range;i++) for (var j=-range;j<=range;j++) {
-                    if (i===0&&j===0) continue;
-                    var d=dist(i,j), p=gp(i,j);
-                    if (p[0]>5&&p[0]<W-5&&p[1]>5&&p[1]<H-5&&d<=gr&&d>minD)
-                        h+='<circle cx="'+p[0]+'" cy="'+p[1]+'" r="6" fill="none" stroke="#f59e0b" stroke-width="1.5"/>';
-                }
-            }
-
-            for (var i=-range;i<=range;i++) for (var j=-range;j<=range;j++) {
-                var p=gp(i,j);
-                if (p[0]>3&&p[0]<W-3&&p[1]>3&&p[1]<H-3) {
-                    var isO=i===0&&j===0;
-                    h+='<circle cx="'+p[0]+'" cy="'+p[1]+'" r="'+(isO?5:3)+'" fill="#5DCAA5" opacity="'+(isO?1:0.6)+'"/>';
-                    if (isO) h+='<text x="'+(p[0]+7)+'" y="'+(p[1]-7)+'" fill="#71717a" font-size="10" font-family="sans-serif">0</text>';
-                }
-            }
-
-            if (opts.showSVPArrow) {
-                var sp=gp(si,sj);
-                h+='<line x1="'+ox+'" y1="'+oy+'" x2="'+sp[0]+'" y2="'+sp[1]+'" stroke="#dc2626" stroke-width="2.5" marker-end="url(#'+mid+')"/>';
-            }
-
-            if (opts.basisColor) {
-                var c=opts.basisColor, op=opts.basisOpacity||1;
-                h+='<line x1="'+ox+'" y1="'+oy+'" x2="'+(ox+b1[0])+'" y2="'+(oy-b1[1])+'" stroke="'+c+'" stroke-width="2.5" opacity="'+op+'" marker-end="url(#'+mid+')"/>';
-                h+='<line x1="'+ox+'" y1="'+oy+'" x2="'+(ox+b2[0])+'" y2="'+(oy-b2[1])+'" stroke="'+c+'" stroke-width="2.5" opacity="'+op+'" marker-end="url(#'+mid+')"/>';
-                h+='<text x="'+(ox+b1[0]+8)+'" y="'+(oy-b1[1]-5)+'" fill="'+c+'" font-size="13" font-weight="600" opacity="'+op+'" font-family="sans-serif">'+(opts.b1Label||'b₁')+'</text>';
-                h+='<text x="'+(ox+b2[0]+8)+'" y="'+(oy-b2[1]-5)+'" fill="'+c+'" font-size="13" font-weight="600" opacity="'+op+'" font-family="sans-serif">'+(opts.b2Label||'b₂')+'</text>';
-            }
-
-            if (opts.altBasis) {
-                var ab=opts.altBasis, ac=opts.altColor||'#dc2626';
-                h+='<line x1="'+ox+'" y1="'+oy+'" x2="'+(ox+ab[0][0])+'" y2="'+(oy-ab[0][1])+'" stroke="'+ac+'" stroke-width="2.5" marker-end="url(#'+mid+')"/>';
-                h+='<line x1="'+ox+'" y1="'+oy+'" x2="'+(ox+ab[1][0])+'" y2="'+(oy-ab[1][1])+'" stroke="'+ac+'" stroke-width="2.5" marker-end="url(#'+mid+')"/>';
-                h+='<text x="'+(ox+ab[0][0]+8)+'" y="'+(oy-ab[0][1]-5)+'" fill="'+ac+'" font-size="13" font-weight="600" font-family="sans-serif">b₁\'</text>';
-                h+='<text x="'+(ox+ab[1][0]-22)+'" y="'+(oy-ab[1][1]-5)+'" fill="'+ac+'" font-size="13" font-weight="600" font-family="sans-serif">b₂\'</text>';
-            }
-
-            svg.innerHTML = h;
-        }
-
-        function init() {
-            var b1=[60,15], b2=[22,52];
-
-            renderLattice('svg-lattice-def', {
-                b1:b1, b2:b2, range:4, basisColor:'#2563eb'
-            });
-
-            renderLattice('svg-lattice-bases', {
-                b1:b1, b2:b2, range:4,
-                basisColor:'#2563eb', basisOpacity:0.35,
-                altBasis:[[82,-7],[-38,45]], altColor:'#dc2626'
-            });
-
-            renderLattice('svg-lattice-svp', {
-                b1:b1, b2:b2, range:4,
-                showSVPCircle:true, showSVPArrow:true, showGammaCircle:true
-            });
-
-            renderLattice('svg-lll-bad', {
-                b1:[100,8], b2:[90,35], range:3, basisColor:'#dc2626'
-            });
-
-            renderLattice('svg-lll-good', {
-                b1:[35,28], b2:[-22,38], range:4, basisColor:'#16a34a'
-            });
-        }
-
-        if (document.readyState==='complete') init();
-        else window.addEventListener('load', init);
-    })();
-    </script>
 </body>
 </html>

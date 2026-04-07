@@ -1,4 +1,21 @@
 # Quellenverzeichnis: Shortest Vector Problem Präsentation
+
+## Folienreferenzen (Kurzübersicht)
+
+| Folie | Quellen |
+|---|---|
+| SVP & Approximation | [2] Ajtai 1998, [6] van Emde Boas 1981 |
+| NP-Härte von SVP | [2] Ajtai 1998, [3] Micciancio 2001, [5] Haviv & Regev 2007 |
+| Die Komplexitätslandschaft | [3] Mic 2001, [5] HR 2007, [11] AR 2005, [21] LLL 1982 |
+| GapSVP ∈ NP ∩ coNP | [9] GG 2000, [10] AR 2003, [11] AR 2005 |
+| Worst-Case = Average-Case | [1] Ajtai 1996, [16] MR 2007, [38] BT 2006 |
+| Die Reduktionskette | [1] Ajt96, [16] MR07, [17] LS15, [18] Reg09, [19] Pei09 |
+| LLL-Algorithmus | [21] LLL 1982, [22] Schnorr 1987 |
+| Algorithmen-Überblick | [21–24] LLL/BKZ/Kannan/AKS, [28] Aggarwal 2015 |
+| NIST-Standards | [16] MR07, [17] LS15, [18] Reg09, [19] Pei09, [46] NIST 2024 |
+
+---
+
 ## Primärliteratur
 ### NP-Härte und Komplexität von SVP
 1. **Ajtai, M.** (1996). "Generating hard instances of lattice problems (extended abstract)." _Proceedings of the 28th ACM Symposium on Theory of Computing (STOC)_, S. 99–108. ACM.
@@ -142,21 +159,19 @@
     - URL: https://csrc.nist.gov/projects/post-quantum-cryptography
 50. **Federal Register** (2024). "Announcing Issuance of FIPS 203, FIPS 204, and FIPS 205." Vol. 89, No. 157, 14. August 2024.
     - URL: https://www.federalregister.gov/documents/2024/08/14/2024-17956/announcing-issuance-of-federal-information-processing-standards-fips-fips-203-module-lattice-based
-51. **Wikipedia** (laufend). "NIST Post-Quantum Cryptography Standardization."
-    - URL: https://en.wikipedia.org/wiki/NIST_Post-Quantum_Cryptography_Standardization
 ## Weitere Referenzen
-52. **Dietzfelbinger, M. et al.** (2020). "Formalizing the LLL Basis Reduction Algorithm and the LLL Factorization Algorithm in Isabelle/HOL." _Journal of Automated Reasoning_, 64, S. 1–47. Springer.
+51. **Dietzfelbinger, M. et al.** (2020). "Formalizing the LLL Basis Reduction Algorithm and the LLL Factorization Algorithm in Isabelle/HOL." _Journal of Automated Reasoning_, 64, S. 1–47. Springer.
     - URL: https://link.springer.com/article/10.1007/s10817-020-09552-1
-53. **Voulgaris, P.** (2013). "Algorithms for the Closest and Shortest Vector Problems on General Lattices." Dissertation, UC San Diego.
+52. **Voulgaris, P.** (2013). "Algorithms for the Closest and Shortest Vector Problems on General Lattices." Dissertation, UC San Diego.
     - URL: https://escholarship.org/uc/item/4zt7x45z
-54. **Jagielski, M.** (2016). "Sieving Algorithms for Lattice Problems." Undergraduate Report, University of Oregon.
+53. **Jagielski, M.** (2016). "Sieving Algorithms for Lattice Problems." Undergraduate Report, University of Oregon.
     - URL: https://www.cs.uoregon.edu/Reports/UG-201606-Jagielski.pdf
-55. **Aggarwal, D., Mukhopadhyay, P. & Stephens-Davidowitz, N.** (2019). "Faster Provable Sieving Algorithms for the Shortest Vector Problem and the Closest Vector Problem." arXiv:1907.04406.
+54. **Aggarwal, D., Mukhopadhyay, P. & Stephens-Davidowitz, N.** (2019). "Faster Provable Sieving Algorithms for the Shortest Vector Problem and the Closest Vector Problem." arXiv:1907.04406.
     - URL: https://arxiv.org/pdf/1907.04406
-56. **Stephens-Davidowitz, N.** (2018). "Introduction and Minkowski's Theorem." Lecture Notes, Mini-course on Lattices.
+55. **Stephens-Davidowitz, N.** (2018). "Introduction and Minkowski's Theorem." Lecture Notes, Mini-course on Lattices.
     - URL: http://www.noahsd.com/mini_lattices/01__intro_and_Minkowski.pdf
-57. **Nguyen, P. Q. & Stehlé, D.** (2014). "Structural Lattice Reduction: Generalized Worst-Case to Average-Case Reductions and Homomorphic Cryptosystems." ePrint 2014/283.
+56. **Nguyen, P. Q. & Stehlé, D.** (2014). "Structural Lattice Reduction: Generalized Worst-Case to Average-Case Reductions and Homomorphic Cryptosystems." ePrint 2014/283.
     - URL: https://eprint.iacr.org/2014/283.pdf
-58. **Peikert, C., Regev, O. & Stephens-Davidowitz, N.** (2017). "Pseudorandomness of Ring-LWE for Any Ring and Modulus." _Proceedings of the 49th ACM Symposium on Theory of Computing (STOC)_, S. 461–473.
-59. **Lyubashevsky, V., Peikert, C. & Regev, O.** (2013). "On ideal lattices and learning with errors over rings." _Journal of the ACM_, 60(6), Artikel 43.
-60. **Peikert, C.** (2016). "A Decade of Lattice Cryptography." _Foundations and Trends in Theoretical Computer Science_, 10(4), S. 283–424.
+57. **Peikert, C., Regev, O. & Stephens-Davidowitz, N.** (2017). "Pseudorandomness of Ring-LWE for Any Ring and Modulus." _Proceedings of the 49th ACM Symposium on Theory of Computing (STOC)_, S. 461–473.
+58. **Lyubashevsky, V., Peikert, C. & Regev, O.** (2013). "On ideal lattices and learning with errors over rings." _Journal of the ACM_, 60(6), Artikel 43.
+59. **Peikert, C.** (2016). "A Decade of Lattice Cryptography." _Foundations and Trends in Theoretical Computer Science_, 10(4), S. 283–424.

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SVP Vortrag — Lernzusammenfassung</title>
+<title>SVP Lernzusammenfassung</title>
 <style>
   :root {
     --bg: #fafaf8;
@@ -86,7 +86,7 @@
   Mit einer Kombination aus den Basisvektoren (nur ganzzahlige Koeffizienten!) kann man das gesamte Gitter abbilden. Kein Punkt fehlt, keiner kommt dazu. Die Basis <em>definiert</em> das Gitter.
 </div>
 
-<p><strong>Basen sind nicht eindeutig:</strong> Dasselbe Gitter kann durch komplett unterschiedliche Basisvektoren beschrieben werden. Manche Basen sind "gut" (kurze, fast senkrechte Vektoren), manche "schlecht" (lange, fast parallele). Man kann nicht einfach orthonormalisieren, weil das reelle Koeffizienten bräuchte.</p>
+<p><strong>Basen sind nicht eindeutig:</strong> Dasselbe Gitter kann durch komplett unterschiedliche Basisvektoren beschrieben werden. Manche Basen sind „gut" (kurze, fast senkrechte Vektoren → SVP leicht lösbar), manche „schlecht" (lange, fast parallele Vektoren → SVP schwer). Man kann nicht einfach orthonormalisieren, weil das reelle Koeffizienten bräuchte — erlaubt sind nur ganzzahlige unimodulare Transformationen (det = ±1).</p>
 
 <p><strong>Grundidee der Gitter-Krypto:</strong> Öffentlicher Schlüssel = schlechte Basis, privater Schlüssel = gute Basis desselben Gitters.</p>
 
@@ -101,7 +101,7 @@
 <script>
 (function(){
   const b1=[80,20], b2=[30,70];
-  const b1p=[110,-10], b2p=[-50,60];
+  const b1p=[110,90], b2p=[190,110];
   const ox=320, oy=220;
   function gp(i,j){return [ox+i*b1[0]+j*b2[0], oy-(i*b1[1]+j*b2[1])];}
   function allPts(){
@@ -123,14 +123,14 @@
   }
   const steps=[
     {label:"1. Gitter",legend:[{c:"#5DCAA5",t:"Gitterpunkte"},{c:"#378ADD",t:"Basis b₁, b₂"}]},
-    {label:"2. Andere Basis",legend:[{c:"#5DCAA5",t:"Gleiche Punkte"},{c:"#378ADD",t:"Alte Basis"},{c:"#D85A30",t:"Neue Basis b₁', b₂'"}]},
+    {label:"2. Schlechte Basis",legend:[{c:"#5DCAA5",t:"Gleiche Punkte"},{c:"#378ADD",t:"Gute Basis (kurz, fast orthogonal)"},{c:"#D85A30",t:"Schlechte Basis b₁', b₂' (lang, fast parallel)"}]},
     {label:"3. SVP",legend:[{c:"#5DCAA5",t:"Gitterpunkte"},{c:"#E24B4A",t:"λ₁ = kürzester Vektor"}]},
     {label:"4. γ-SVP",legend:[{c:"#E24B4A",t:"λ₁ (exakt)"},{c:"#EF9F27",t:"γ·λ₁ (Approximation ok)"}]},
     {label:"5. CVP",legend:[{c:"#7F77DD",t:"Zielpunkt t"},{c:"#1D9E75",t:"Nächster Gitterpunkt"}]},
   ];
   const captions=[
     `<strong>Ein Gitter</strong> entsteht durch alle ganzzahligen Kombinationen der Basisvektoren b₁ und b₂.`,
-    `<strong>Dasselbe Gitter, andere Basis.</strong> Die orangenen Vektoren erzeugen exakt die gleichen Punkte. Das ist die Grundidee der Krypto: öffentlich = schlechte Basis, privat = gute.`,
+    `<strong>Dasselbe Gitter, schlechte Basis.</strong> b₁' = b₁+b₂ und b₂' = 2b₁+b₂ — beide lang, nur ~8° auseinander (fast parallel). Die Vektoren erzeugen exakt die gleichen Punkte. Grundidee der Krypto: öffentlicher Schlüssel = schlechte Basis, privater Schlüssel = gute.`,
     `<strong>SVP: Finde den kürzesten Nicht-Null-Vektor.</strong> In 2D trivial — in Dimension 500+ exponentiell schwer.`,
     `<strong>γ-SVP:</strong> Statt exakt λ₁ zu finden, reicht ein Vektor im orangenen Kreis. Je größer γ, desto leichter.`,
     `<strong>CVP:</strong> Finde den nächsten Gitterpunkt zu einem externen Punkt t. Mindestens so schwer wie SVP.`,
@@ -169,7 +169,7 @@
 <p>Statt den exakt kürzesten Vektor zu finden, reicht einer, der höchstens γ-mal so lang ist. Drei Varianten:</p>
 <p><strong>Suchversion (SVP_γ):</strong> Finde einen Vektor v mit ‖v‖ ≤ γ · λ₁.</p>
 <p><strong>Schätzversion (EstSVP_γ):</strong> Gib die Länge λ₁ bis auf Faktor γ genau an.</p>
-<p><strong>Entscheidungsversion (GapSVP_γ):</strong> Gegeben Basis B und Wert d, unterscheide: Ist λ₁ ≤ d (YES) oder λ₁ > γ·d (NO)? Alles dazwischen ist Grauzone (Promise-Problem).</p>
+<p><strong>Entscheidungsversion (GapSVP_γ):</strong> Gegeben Basis B und Wert d, unterscheide: Ist λ₁ ≤ d (YES) oder λ₁ > γ·d (NO)? Alles dazwischen ist Grauzone (Promise-Problem) — dort darf die Antwort beliebig sein. In der Visualisierung: blauer Kreis = YES-Grenze (d), oranger Kreis = NO-Grenze (γ·d), gelbe Zone dazwischen = der „verbotene" Bereich, den das Problem ignoriert.</p>
 
 <div class="merkbox">
   <div class="merkbox-title">Die Komplexitätslandschaft von γ</div>
@@ -181,7 +181,8 @@
 </div>
 
 <h3>CVP (Closest Vector Problem)</h3>
-<p>Gegeben ein Gitter und einen beliebigen Punkt t, finde den nächsten Gitterpunkt. CVP ≥ SVP in der Schwierigkeit (es gibt eine Reduktion von SVP auf CVP).</p>
+<p>Gegeben ein Gitter und einen externen Punkt t (nicht im Gitter), finde den nächstgelegenen Gitterpunkt. In der Visualisierung: roter Punkt mit Kreuz = Zielpunkt t, grün umringter Punkt = nächster Gitterpunkt, gestrichelte Linie = minimale Distanz.</p>
+<p><strong>Verhältnis zu SVP:</strong> SVP ≤<sub>p</sub> CVP (Polynomialzeit-Reduktion: Man kann SVP auf CVP reduzieren, indem man Basis verdoppelt und t geschickt wählt). Die Umkehrung ist unbekannt — CVP gilt als das natürlich schwerere Problem. Typische Anwendung in der Kryptografie: t ist ein verrauschter Geheimtext, der nächste Gitterpunkt ist die eigentliche Nachricht.</p>
 
 <!-- ═══════════════════════════════════════ -->
 <h2>3. Komplexitätstheoretische Einordnung</h2>
@@ -467,7 +468,7 @@
 
 <div class="prof-box">
   <div class="prof-box-title">3. Was ist der Unterschied zwischen SVP und CVP?</div>
-  SVP: kürzester Vektor im Gitter. CVP: nächster Gitterpunkt zu einem externen Punkt. CVP ≥ SVP (Reduktion über verdoppelte Basisvektoren).
+  SVP: kürzester Nicht-Null-Vektor im Gitter (Länge = λ₁). CVP: nächster Gitterpunkt zu einem externen Punkt t ∉ L. SVP ≤<sub>p</sub> CVP — man kann SVP auf CVP reduzieren (Einbettungstrick: verdopple die Basis und wähle t so, dass der nächste Gitterpunkt dem kürzesten Vektor entspricht). Umkehrung unbekannt. GapCVP ist ebenfalls NP-hart und liegt für große γ in NP ∩ coNP.
 </div>
 
 <div class="prof-box">
@@ -486,7 +487,7 @@
 </div>
 
 <hr>
-<p style="color:var(--text3);font-size:13px;margin-top:32px;">Erstellt am Montag während der Pomodoro-Tutoring-Session. Alle Visualisierungen sind interaktiv — klick dich durch die Tabs.</p>
+<p style="color:var(--text3);font-size:13px;margin-top:32px;">Zuletzt aktualisiert: April 2026. Alle Visualisierungen sind interaktiv — klick dich durch die Tabs.</p>
 
 </body>
 </html>

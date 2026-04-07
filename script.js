@@ -139,6 +139,16 @@
         renderLattice('svg-lll-good', {
             b1:[35,28], b2:[-22,38], range:4, basisColor:'#16a34a'
         });
+
+        // NP-Härte Beweis: SAT-Reduktion YES/NO
+        renderLattice('svg-sat-yes', {
+            b1:[32,8], b2:[8,32], range:4,
+            showSVPArrow:true, showSVPCircle:true
+        });
+
+        renderLattice('svg-sat-no', {
+            b1:[80,15], b2:[15,75], range:2
+        });
     }
 
     if (document.readyState==='complete') init();

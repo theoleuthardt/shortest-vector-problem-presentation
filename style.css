@@ -368,6 +368,85 @@
 
 /* ─── Reduction chain ────────────────────────────────── */
 
+.proof-steps {
+    list-style: none;
+    counter-reset: step;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7em;
+}
+
+.proof-steps li {
+    counter-increment: step;
+    display: flex;
+    align-items: baseline;
+    gap: 0.6em;
+    font-size: 0.8em;
+    text-align: left;
+}
+
+.proof-steps li::before {
+    content: counter(step);
+    min-width: 1.4em;
+    height: 1.4em;
+    background: var(--accent-blue);
+    color: white;
+    border-radius: 50%;
+    font-size: 0.75em;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.proof-steps li:last-child::before {
+    background: var(--accent-green);
+}
+
+.sat-cases {
+    display: flex;
+    gap: 1em;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.sat-case {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+}
+
+.reduction-flow-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5em;
+    margin: 0.4em 0;
+}
+
+.rflow-box {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-light);
+    border-radius: 6px;
+    padding: 0.3em 1em;
+    font-size: 0.78em;
+    font-weight: 500;
+}
+
+.rflow-box-mid {
+    border-color: var(--accent-blue);
+    color: var(--accent-blue);
+}
+
+.rflow-arrow {
+    color: var(--text-muted);
+    font-size: 1.1em;
+}
+
 .reduction-chain {
     display: flex;
     flex-direction: column;
@@ -493,6 +572,17 @@
 
 .complexity-svg { max-width: 960px; margin: 0.3em auto; display: block; }
 .table-sm       { font-size: 0.72em; }
+
+.legend-box {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.2em 1.4em;
+    font-size: 0.62em;
+    color: var(--text-muted);
+    border-top: 1px solid var(--border-light);
+    padding-top: 0.4em;
+}
 .link-source    { font-size: 1.4em; color: var(--accent-blue); text-decoration: underline; }
 
 /* ─── Citation bar ───────────────────────────────────── */
